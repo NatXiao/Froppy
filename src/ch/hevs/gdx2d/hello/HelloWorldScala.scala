@@ -16,11 +16,11 @@ import ch.hevs.gdx2d.desktop.PortableApplication
 object HelloWorldScala {
 
   def main(args: Array[String]): Unit = {
-    new HelloWorldScala
+    new HelloWorldScala(1920,1080)
   }
 }
 
-class HelloWorldScala extends PortableApplication {
+class HelloWorldScala(witdh : Int, height : Int) extends PortableApplication(witdh, height) {
   private var imgBitmap: BitmapImage = null
 
   override def onInit(): Unit = {
