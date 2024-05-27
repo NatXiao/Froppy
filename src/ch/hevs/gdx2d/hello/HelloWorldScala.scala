@@ -1,9 +1,9 @@
 package ch.hevs.gdx2d.hello
 
-import com.badlogic.gdx.Gdx
+import com.badlogic.gdx.{Game, Gdx}
 import com.badlogic.gdx.math.Interpolation
 import ch.hevs.gdx2d.components.bitmaps.BitmapImage
-import ch.hevs.gdx2d.lib.GdxGraphics
+import ch.hevs.gdx2d.lib.{GdxGraphics, ScreenManager}
 import ch.hevs.gdx2d.desktop.PortableApplication
 
 
@@ -22,9 +22,10 @@ object HelloWorldScala {
 
 class HelloWorldScala(witdh : Int, height : Int) extends PortableApplication(witdh, height) {
   private var imgBitmap: BitmapImage = null
+  private var s : ScreenManager = new ScreenManager()
 
   override def onInit(): Unit = {
-    setTitle("Hello World - mui 2024")
+    setTitle("Froppy")
 
     // Load a custom image (or from the lib "res/lib/icon64.png")
     imgBitmap = new BitmapImage("data/images/ISC_logo.png")
@@ -53,7 +54,7 @@ class HelloWorldScala(witdh : Int, height : Int) extends PortableApplication(wit
 
     // Draw everything
     g.drawTransformedPicture(getWindowWidth / 2.0f, getWindowHeight / 2.0f, angle, 0.7f, imgBitmap)
-    g.drawStringCentered(getWindowHeight * 0.8f, "Welcome to gdx2d !")
+    g.drawStringCentered(getWindowHeight * 0.8f, "Froppy")
     g.drawFPS()
     g.drawSchoolLogo()
   }
