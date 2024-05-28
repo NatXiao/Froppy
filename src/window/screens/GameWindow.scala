@@ -2,7 +2,6 @@ package window.screens
 
 import ch.hevs.gdx2d.components.screen_management.RenderingScreen
 import ch.hevs.gdx2d.lib.GdxGraphics
-import ch.hevs.gdx2d.lib.physics.PhysicsWorld
 import com.badlogic.gdx.graphics.Color
 
 
@@ -15,7 +14,6 @@ class GameWindow extends RenderingScreen {
   }
 
   override def dispose(): Unit = {
-    PhysicsWorld.dispose()
     super.dispose()
   }
 }

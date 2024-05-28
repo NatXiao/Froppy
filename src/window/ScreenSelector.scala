@@ -19,7 +19,6 @@ object ScreenSelector{
 class ScreenSelector (width : Int, height : Int) extends PortableApplication (width, height) {
 
   private val s = new ScreenManager
-  private var transactionTypeId : Int = 0
 
   override def onInit(): Unit = {
     setTitle("Froppy")
@@ -45,8 +44,6 @@ class ScreenSelector (width : Int, height : Int) extends PortableApplication (wi
 
   override def onKeyDown(keycode: Int): Unit = {
     super.onKeyDown(keycode)
-
-
 
 
     // Switch to next screen using all available transitions effects
