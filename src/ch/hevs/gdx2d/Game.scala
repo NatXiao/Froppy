@@ -29,7 +29,7 @@ class Game {
   def onLily(pos: Vector2, angle: Float, lil: ArrayBuffer[Lily]): Boolean = {
     //distance center lily and the direction
     var proj: Double = 0
-    var n : Vector2 = new Vector2(1/pos.x, 1/pos.y)
+    var n : Vector2 = new Vector2(1/pos.x*angle, 1/pos.y*angle)
     for (l <- lil) {
       var vect : Vector2 = new Vector2(l.pos.x-pos.x, l.pos.y-pos.y)
       proj = abs(n.x*vect.x + n.y*vect.y)/sqrt(n.x*n.x + n.y*n.y)
