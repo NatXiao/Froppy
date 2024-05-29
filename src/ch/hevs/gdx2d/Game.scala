@@ -28,7 +28,10 @@ class Game {
 
   def onLily(pos: Vector2, angle: Float, lil: ArrayBuffer[Lily]): Boolean = {
     //distance center lily and the direction
-
+    if(270f>angle && angle > 90f){
+      println(angle + "you can't go there")
+      return false
+    }
     var res : Double = 0
     for(l <- lil) {
       var angle2 = angle*math.Pi/180
@@ -41,10 +44,13 @@ class Game {
       var angle_between : Double = angle2 - angle_alpha
       var res : Double = norme_vectPC*math.abs(sin(angle_between))
       if (res <= l.r) {
+        println(angle + "yeah, you jumped!")
         return true
       }
+      println(angle + "so...")
+
     }
-      //res = -(tan(angle2) * tan(angle2) * (l.pos.x-pos.x)*(l.pos.x-pos.x)) + (pos.y-l.pos.y)*(2*tan(angle2)*(pos.x-l.pos.x)-(pos.y-l.pos.y)-(pos.y-l.pos.y)) - l.r*l.r*(1+ tan(angle2)*tan(angle2))
+      //res = -(tan(angle2) * tan(angle2) * (l.pos.x-pos.x)*(l.pos.x-pos.x)) + (pos.y-l.pos.y)*(2*tan(angle2)*(pos.x-l.pos.x)-(pos.y-l.pos.y)-(pos.y-l.pos.y)) + l.r*l.r*(1+ tan(angle2)*tan(angle2))
       //println("res : " + res)
       //if (res >= 0) {
       //  return true

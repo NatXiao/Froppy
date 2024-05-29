@@ -9,7 +9,7 @@ import com.badlogic.gdx.math.{Interpolation, Vector2}
 
 class Lily(var posi: Vector2) extends AnimatedObject(posi){
   override var img: BitmapImage = new BitmapImage("data/images/lily.png")
-  var r : Int = 100
+  var r : Int = 200
   var rotationSpeed : Int = 1
   var rotationDirection : Boolean = true //trigonometric direction true, else false
   var direction : Int = 0

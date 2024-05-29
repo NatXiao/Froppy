@@ -20,6 +20,7 @@ class Frog(var posit : Vector2) extends AnimatedObject(posit) {
     if (direction >= 360) {
       direction = 0
     }
+    //println(direction)
     //g.drawLine(posit.x, posit.y, cos(direction)*r+posit.x, sin(direction)*r+posit.y)
   }
 }
