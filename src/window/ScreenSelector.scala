@@ -45,7 +45,6 @@ class ScreenSelector (width : Int, height : Int) extends PortableApplication (wi
   override def onKeyDown(keycode: Int): Unit = {
     super.onKeyDown(keycode)
 
-
     // Switch to next screen using all available transitions effects
     /**if (keycode == Input.Keys.SPACE) {
       s.transitionToNext(ScreenManager.TransactionType.values())
