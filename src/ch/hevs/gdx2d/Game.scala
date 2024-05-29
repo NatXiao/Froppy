@@ -4,7 +4,7 @@ import com.badlogic.gdx.math.MathUtils.random
 import com.badlogic.gdx.math.{Interpolation, Vector2}
 
 import scala.collection.mutable.ArrayBuffer
-import scala.math.{abs, sqrt}
+import scala.math.{abs, sqrt, tan}
 
 class Game {
   var loose = false
@@ -28,12 +28,12 @@ class Game {
 
   def onLily(pos: Vector2, angle: Float, lil: ArrayBuffer[Lily]): Boolean = {
     //distance center lily and the direction
-    var a : Float = 1+angle*angle
+    var angle2: Float = tan(angle).toFloat
+    var a: Float = 1 + angle2 * angle2
     for (l <- lil.tail) {
-      var b = -2* l.pos.x + 2*angle*(pos.y-l.pos.y)
-      var c = l.pos.y*l.pos.y + (pos.y-l.pos.y)*(pos.y-l.pos.y)-l.r*l.r
-      var d = b*b - 4*a*c
-      //Compare radius and the distance
+      var b = -2 * l.pos.y + 2 * angle2 * (pos.x - l.pos.x)
+      var c = l.pos.x * l.pos.x + (pos.x - l.pos.x) * (pos.x - l.pos.x) - l.r * l.r
+      var d = b * b - 4 * a * c
       if (d >= 0) {
         return true
       }
@@ -42,7 +42,8 @@ class Game {
   }
 
   def jump(): Unit = { //if the center of the lily is in the frog's colliderbox, add score, else life-1
-      if (onLily(frog.pos, frog.direction, lilys)) {
+    println("jump")
+    if (onLily(frog.pos, frog.direction, lilys)) {
         addLily()
         nbeLilyPassed += 1
         score += 100
