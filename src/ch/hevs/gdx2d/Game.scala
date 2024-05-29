@@ -20,21 +20,23 @@ class Game {
 
   def addLily(): Unit = {
     var y: Int = random(60, 1020)
-    var distance: Int = 30 // TODO depends on nbeLilyPassed
-    lilys.append(new Lily(new Vector2(lilys.last.pos.x + distance, lilys.last.pos.y + y))) //create it after the last one
+    var distance: Int = 300 // TODO depends on nbeLilyPassed
+    lilys.append(new Lily(new Vector2(lilys.last.pos.x + distance, (lilys.last.pos.y + y)%1020))) //create it after the last one
   }
 
   var frog: Frog = new Frog(lilys.head.pos) //create it on the first lily
 
+
+
   def onLily(pos: Vector2, angle: Float, lil: ArrayBuffer[Lily]): Boolean = {
     //distance center lily and the direction
-    var proj: Double = 0
-    var n : Vector2 = new Vector2(1/pos.x*angle, 1/pos.y*angle)
-    for (l <- lil) {
-      var vect : Vector2 = new Vector2(l.pos.x-pos.x, l.pos.y-pos.y)
-      proj = abs(n.x*vect.x + n.y*vect.y)/sqrt(n.x*n.x + n.y*n.y)
+    var a : Float = 1+angle*angle
+    for (l <- lil.tail) {
+      var b = -2* l.pos.x + 2*a*(pos.y-l.pos.y)
+      var c = l.pos.y*l.pos.y + (pos.y-l.pos.y)*(pos.y-l.pos.y)-l.r*l.r
+      var d = b*b - 4*a*c
       //Compare radius and the distance
-      if (proj < l.r / 2) {
+      if (d >= 0) {
         return true
       }
     }
@@ -42,21 +44,25 @@ class Game {
   }
 
   def jump(): Unit = { //if the center of the lily is in the frog's colliderbox, add score, else life-1
-    //addLily()
-    for (i <- 0 to 100) { //the distance we allow the frog to jump (?)
-      frog.pos.y = Interpolation.linear.apply(frog.pos.y)
+    addLily()
       for (lil <- lilys) {
-        lil.pos.x = Interpolation.linear.apply(lil.pos.x, frog.pos.x, 1f)
+        lil.pos.x = Interpolation.linear.apply(lil.pos.x-100)
       }
+    frog.pos.y = Interpolation.linear.apply(lilys.tail.head.pos.y)
+    frog.pos.x = Interpolation.linear.apply(lilys.tail.head.pos.x)
+    lilys = lilys.drop(1)
       if (onLily(frog.pos, frog.direction, lilys)) {
+        println(frog.direction)
         nbeLilyPassed += 1
         score += 100
       }
-      else life -= 1
+      else {
+        life -= 1
+      }
       if(life == 0){
         loose = !loose
       }
-    } //animation
+     //animation
   }
 
 

@@ -13,11 +13,11 @@ class Lily(var posi: Vector2) extends AnimatedObject(posi){
   var direction : Int = 0
 
   def onGraphicsRender(g: GdxGraphics): Unit = {
-    //g.setColor(Color.GREEN)
-    //g.drawCircle(posi.x, posi.y, r)
+    g.setColor(Color.GREEN)
+    g.drawCircle(posi.x, posi.y, r)
     g.drawTransformedPicture(posi.x, posi.y, direction, 1, img)
     direction += 1
-    if (direction >= 360) {
+    if (direction >= 360 || direction <= -360) {
       direction = 0
     }
   }

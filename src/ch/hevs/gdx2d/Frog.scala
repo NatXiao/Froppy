@@ -8,7 +8,7 @@ import com.badlogic.gdx.math.Vector2
 class Frog(var posit : Vector2) extends AnimatedObject(posit) {
   override var img: BitmapImage = null
   var r : Int = 30
-  var direction : Float = 0f //degree
+  var direction : Int = 0 //degree
   var onLily : Boolean = true //rotation on
 
   def onGraphicsRender(g : GdxGraphics): Unit = {

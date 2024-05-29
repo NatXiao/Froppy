@@ -2,16 +2,24 @@ package window.screens
 
 import ch.hevs.gdx2d.Game
 import ch.hevs.gdx2d.components.screen_management.RenderingScreen
+import ch.hevs.gdx2d.desktop.PortableApplication
 import ch.hevs.gdx2d.lib.GdxGraphics
 import ch.hevs.gdx2d.lib.utils.Logger
 import com.badlogic.gdx.Input
 import com.badlogic.gdx.graphics.Color
 
+object ScreenSelector{
+  def main(args : Array[String]): Unit = {
+    new GameWindow(1920,1080)
+  }
+}
 
-class GameWindow extends RenderingScreen {
-  var game : Game =  new Game
+class GameWindow (width : Int, height : Int) extends PortableApplication(width, height)  {
+  var game : Game =  _
 
   override def onInit(): Unit = {
+    setTitle("Froppy")
+    game = new Game
   }
 
   override def onGraphicRender(g: GdxGraphics): Unit = {
@@ -23,6 +31,9 @@ class GameWindow extends RenderingScreen {
       i.onGraphicsRender(g)
     }
     game.frog.onGraphicsRender(g)
+    if (game.frog.onLily) {
+      game.frog.direction = game.lilys.head.direction
+    }
   }
 
   override def onKeyDown(keycode: Int): Unit = {
@@ -30,10 +41,9 @@ class GameWindow extends RenderingScreen {
     if (keycode == Input.Keys.SPACE) {
       game.jump()
     }
-    Logger.log("jumped!")
   }
 
-  override def dispose(): Unit = {
+  /*override def dispose(): Unit = {
     super.dispose()
-  }
+  }*/
 }

@@ -46,10 +46,11 @@ class ScreenSelector (width : Int, height : Int) extends PortableApplication (wi
     super.onKeyDown(keycode)
 
     // Switch to next screen using all available transitions effects
-    /**if (keycode == Input.Keys.SPACE) {
-      s.transitionToNext(ScreenManager.TransactionType.values())
+    /*if (keycode == Input.Keys.SPACE) {
+      print("jump")
+    }*/
 
-      // Switch to the next transition effect
+    /*  // Switch to the next transition effect
       transactionTypeId = (transactionTypeId + 1) % ScreenManager.TransactionType.values.length
     }**/
     if (keycode == Input.Keys.NUM_1) {
