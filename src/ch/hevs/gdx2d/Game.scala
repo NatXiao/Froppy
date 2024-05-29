@@ -4,7 +4,7 @@ import com.badlogic.gdx.math.MathUtils.random
 import com.badlogic.gdx.math.{Interpolation, Vector2}
 
 import scala.collection.mutable.ArrayBuffer
-import scala.math.{abs, sqrt, tan}
+import scala.math.{abs, sin, sqrt, tan}
 
 class Game {
   var loose = false
@@ -13,9 +13,9 @@ class Game {
   var nbeLilyPassed: Int = 0
   //var zoom : Double = 1
 
-  var firstLily = new Lily(new Vector2(300, 100))
-  var starter1 = new Lily(new Vector2(800, 500))
-  var starter2 = new Lily(new Vector2(1300, 900))
+  var firstLily = new Lily(new Vector2(300, 200))
+  var starter1 = new Lily(new Vector2(700, 200))
+  var starter2 = new Lily(new Vector2(1100, 200))
   var lilys: ArrayBuffer[Lily] = ArrayBuffer(firstLily, starter1, starter2)
 
   def addLily(): Unit = {
@@ -28,16 +28,29 @@ class Game {
 
   def onLily(pos: Vector2, angle: Float, lil: ArrayBuffer[Lily]): Boolean = {
     //distance center lily and the direction
-    var angle2: Float = tan(angle).toFloat
-    var a: Float = 1 + angle2 * angle2
-    for (l <- lil.tail) {
-      var b = -2 * l.pos.y + 2 * angle2 * (pos.x - l.pos.x)
-      var c = l.pos.x * l.pos.x + (pos.x - l.pos.x) * (pos.x - l.pos.x) - l.r * l.r
-      var d = b * b - 4 * a * c
-      if (d >= 0) {
+
+    var res : Double = 0
+    for(l <- lil) {
+      var angle2 = angle*math.Pi/180
+
+      var vectPC : Vector2 = new Vector2(l.pos.x - pos.x, l.pos.y - pos.y)
+      var norme_vectPC : Double = math.sqrt(vectPC.x*vectPC.x + vectPC.y*vectPC.y)
+      var oppos : Double = l.pos.y-pos.y
+      var adj : Double = l.pos.x - pos.x
+      var angle_alpha : Double = math.atan(oppos/adj)//radian
+      var angle_between : Double = angle2 - angle_alpha
+      var res : Double = norme_vectPC*math.abs(sin(angle_between))
+      if (res <= l.r) {
         return true
       }
     }
+      //res = -(tan(angle2) * tan(angle2) * (l.pos.x-pos.x)*(l.pos.x-pos.x)) + (pos.y-l.pos.y)*(2*tan(angle2)*(pos.x-l.pos.x)-(pos.y-l.pos.y)-(pos.y-l.pos.y)) - l.r*l.r*(1+ tan(angle2)*tan(angle2))
+      //println("res : " + res)
+      //if (res >= 0) {
+      //  return true
+      //}
+    //}
+
     return false
   }
 

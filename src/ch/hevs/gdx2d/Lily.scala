@@ -16,20 +16,17 @@ class Lily(var posi: Vector2) extends AnimatedObject(posi){
   //SLOW THE DIRECTION
 
   private var currentTime: Float = 0
-  final private val ANIMATION_LENGTH: Float = 5f
+  final private val ANIMATION_LENGTH: Float = 10f
 
   def onGraphicsRender(g: GdxGraphics): Unit = {
     //DEPEND ON TIME
-    currentTime += Gdx.graphics.getDeltaTime
-    var t = currentTime / ANIMATION_LENGTH
+    g.drawCircle(posi.x, posi.y, r)
 
-    val angle: Float = Interpolation.linear.apply(0f, 360f, t)
-
-    g.drawTransformedPicture(posi.x, posi.y, angle, 2, img)
-    direction += 1
+    g.drawTransformedPicture(posi.x, posi.y, direction, 2, img)
+    direction+= 1
     if (direction >= 360 || direction <= -360) {
       direction = 0
     }
-    g.drawLine(posi.x, posi.y, cos(direction)*r+posi.x, sin(direction)*r+posi.y)
+    g.drawLine(posi.x, posi.y, cos((direction*(math.Pi/180)).toFloat)*r+posi.x, sin((direction*(math.Pi/180)).toFloat)*r+posi.y)
   }
 }
