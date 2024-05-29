@@ -10,6 +10,7 @@ class Settings extends RenderingScreen {
   override def onGraphicRender(g: GdxGraphics): Unit = {
     g.clear(Color.DARK_GRAY)
     g.drawStringCentered(g.getScreenHeight / 2, "4 - Settings")
+    g.drawFilledRectangle(1570f, 930f, 400f,100f,0f,Color.GOLD)
   }
 
   override def dispose(): Unit = {
