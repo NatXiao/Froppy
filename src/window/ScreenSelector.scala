@@ -4,11 +4,7 @@ import ch.hevs.gdx2d.desktop.PortableApplication
 import ch.hevs.gdx2d.lib.utils.Logger
 import ch.hevs.gdx2d.lib.{GdxGraphics, ScreenManager}
 import com.badlogic.gdx.Input
-
-import window.screens.GameWindow
-import window.screens.Menu
-import window.screens.Loose
-import window.screens.Settings
+import window.screens.{GameWindow, LeaderBoard, Loose, Menu, Settings}
 
 object ScreenSelector{
   def main(args : Array[String]): Unit = {
@@ -27,6 +23,7 @@ class ScreenSelector (width : Int, height : Int) extends PortableApplication (wi
     s.registerScreen(classOf[GameWindow])
     s.registerScreen(classOf[Loose])
     s.registerScreen(classOf[Settings])
+    s.registerScreen(classOf[LeaderBoard])
   }
 
   override def onGraphicRender(g: GdxGraphics): Unit = {
