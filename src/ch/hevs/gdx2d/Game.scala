@@ -11,7 +11,7 @@ class Game {
   var loose = false
   private var score: Int = 0
   private var life: Int = 5
-  var nbeLilyPassed: Int = 0 //TODO : challenging the player when reached "level"
+  var nbeLilyPassed: Int = 0
   //var zoom : Double = 1
 
   var firstLily = new Lily(new Vector2(300, 200))
@@ -21,14 +21,13 @@ class Game {
 
   def addLily(): Unit = {
     var y: Int = random(60, 1020)
-    var distance: Int = 400 // depends on nbeLilyPassed
+    var distance: Int = 400 // TODO depends on nbeLilyPassed
     lilys.append(new Lily(new Vector2(lilys.last.pos.x + distance, (lilys.last.pos.y + y)%1020))) //create it after the last one
   }
 
   var frog: Frog = new Frog(lilys.head.pos) //create it on the first lily
 
   def onLily(pos: Vector2, angle: Float, lil: ArrayBuffer[Lily]): Boolean = {
-    var count = 0
     //distance center lily and the direction
     if(270f>angle && angle > 90f){
       println(angle + "you can't go there")
@@ -51,37 +50,28 @@ class Game {
   }
 
   def jump(): Unit = { //if the center of the lily is in the frog's colliderbox, add score, else life-1
-    frog.onLily = false
     println("jump")
     if (onLily(frog.pos, frog.direction, lilys)) {
-      frog.reached = true
-      //TODO add if first or second lily
         addLily()
         nbeLilyPassed += 1
         score += 100
-        /*for (lil <- lilys) {
+        for (lil <- lilys) {
           lil.pos.x = Interpolation.linear.apply(lil.pos.x - 400)
-        }*/
-        //frog.pos.y = Interpolation.linear.apply(frog.pos.y,frog.pos.y*frog.direction, frog.t)
-        //frog.pos.x = Interpolation.linear.apply(lilys.tail.head.pos.x)
+        }
+        frog.pos.y = Interpolation.linear.apply(lilys.tail.head.pos.y)
+        frog.pos.x = Interpolation.linear.apply(lilys.tail.head.pos.x)
         lilys = lilys.drop(1)
-        frog.onLily = true
       }
       else {
-      frog.reached = false
-      if (270f > frog.direction && frog.direction > 90f) {
-        //if backward, don't jump, don't loose life
-        println(frog.direction + "you can't go there")
-      }else {
-        // TODO Interpolation animation?
         life -= 1
       }
-    }
       if(life == 0){
         loose = !loose
       }
+     //animation
   }
-  //Getters
+
+
   def getScore(): String = {
     return "Score : " + score.toString
   }
