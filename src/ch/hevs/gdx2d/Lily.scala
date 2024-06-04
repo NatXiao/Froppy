@@ -14,6 +14,7 @@ class Lily(var posi: Vector2) extends AnimatedObject(posi){
   var rotationDirection : Boolean = true //trigonometric direction true, else false
   var direction : Int = 0
 
+  //animations
   private var currentTime: Float = 0
   private val ANIMATION_LENGTH: Float = 10f
 
