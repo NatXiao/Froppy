@@ -2,23 +2,15 @@ package window.screens
 
 import ch.hevs.gdx2d.Game
 import ch.hevs.gdx2d.components.screen_management.RenderingScreen
-import ch.hevs.gdx2d.desktop.PortableApplication
 import ch.hevs.gdx2d.lib.GdxGraphics
-import ch.hevs.gdx2d.lib.utils.Logger
 import com.badlogic.gdx.Input
 import com.badlogic.gdx.graphics.Color
 
-object ScreenSelector{
-  def main(args : Array[String]): Unit = {
-    new GameWindow(1920,1080)
-  }
-}
 
-class GameWindow (width : Int, height : Int) extends PortableApplication(width, height)  {
-  var game : Game =  _
+class GameWindow extends RenderingScreen  {
+  var game : Game = _
 
   override def onInit(): Unit = {
-    setTitle("Froppy")
     game = new Game
   }
 
@@ -38,6 +30,7 @@ class GameWindow (width : Int, height : Int) extends PortableApplication(width, 
 
   override def onKeyDown(keycode: Int): Unit = {
     super.onKeyDown(keycode)
+    println("sboing Settings")
     if (keycode == Input.Keys.SPACE) {
       game.jump()
     }

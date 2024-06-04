@@ -1,6 +1,6 @@
 package ch.hevs.gdx2d
 /**
-class SinkingLily(var positi : Vector2) extends Lily(positi) {
+class SinkingLily(var positi : Vector2,) extends Lily(positi) {
   private val nbeTurnMAX : Int = 2
   var sunk : Boolean = false
 
