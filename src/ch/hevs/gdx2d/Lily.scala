@@ -2,12 +2,10 @@ package ch.hevs.gdx2d
 
 import ch.hevs.gdx2d.components.bitmaps.BitmapImage
 import ch.hevs.gdx2d.lib.GdxGraphics
-import com.badlogic.gdx.Gdx
-import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.math.MathUtils.{cos, sin}
-import com.badlogic.gdx.math.{Interpolation, Vector2}
+import com.badlogic.gdx.math.Vector2
 
-class Lily(var posi: Vector2) extends AnimatedObject(posi){
+class Lily(var posi: Vector2, var nbLily: Int) extends AnimatedObject(posi){
   override var img: BitmapImage = new BitmapImage("data/images/lily.png")
   var r : Int = 200
   var rotationSpeed : Int = 1 //for more spicy playing!
