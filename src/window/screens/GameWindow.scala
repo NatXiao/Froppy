@@ -30,7 +30,7 @@ class GameWindow extends RenderingScreen  {
 
   override def onKeyDown(keycode: Int): Unit = {
     super.onKeyDown(keycode)
-    println("sboing Settings")
+    //println("sboing Settings")
     if (keycode == Input.Keys.SPACE) {
       game.jump()
     }

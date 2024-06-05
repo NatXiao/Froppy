@@ -18,27 +18,19 @@ class Lily(var posi: Vector2, var nbLily: Int) extends AnimatedObject(posi){
 
   //animations
   private var currentTime: Float = 0
-  private val ANIMATION_LENGTH: Float = 1.3f
+  private val ANIMATION_LENGTH: Float = 1f
 
   def onGraphicsRender(g: GdxGraphics): Unit = {
     //DEPEND ON TIME
-    g.drawTransformedPicture(posi.x, posi.y, direction, 2, img)
-
-    direction+= 1 //merry-go-rounnnnnd
     if (direction >= 360 || direction <= -360) {
       direction = 0
     }
     if(mooving){
       currentTime += Gdx.graphics.getDeltaTime
       var animationTime: Float = currentTime / ANIMATION_LENGTH
-      println("ldestination " + destinationX)
       posi.x = Interpolation.linear.apply(posi.x, destinationX, animationTime)
-      println("lx " + posi.x)
-
       g.drawTransformedPicture(posi.x, posi.y, direction, 2, img)
-      g.clear(Color.BLUE)
       if (posi.x == destinationX) {
-        print("stop")
         mooving = false
         g.drawTransformedPicture(posi.x, posi.y, direction, 2, img)
         currentTime = 0f
@@ -46,6 +38,7 @@ class Lily(var posi: Vector2, var nbLily: Int) extends AnimatedObject(posi){
       }
     }
     else {
+      direction+= 1
       currentTime = 0f
       g.drawTransformedPicture(posi.x, posi.y, direction, 2, img)
     }

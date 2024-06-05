@@ -7,11 +7,9 @@ import scala.collection.mutable.ArrayBuffer
 import scala.math.sin
 
 class Game {
-  var loose = false
   private var score: Int = 0
   private var life: Int = 5
   var nbeLilyPassed: Int = 0
-  //var zoom : Double = 1
   var nbLily = 2
   var distance: Int = 400
 
@@ -23,14 +21,10 @@ class Game {
 
   def addLily(): Unit = {
     var trap : Int =random(1, 10)
-    var y: Int = random(60, 1020)
-    //var distance: Int = 400 // TODO depends on nbeLilyPassed
+    var y: Int = random(240, 940)
     nbLily += 1
-    while(lilys.length <= 2) {
-      lilys.append(new Lily(new Vector2(lilys.last.pos.x +400, y), nbLily))
-      nbLily += 1
-    }
-    lilys.append(new Lily(new Vector2(lilys.last.pos.x + 400, (lilys.last.pos.y + y)%1020),nbLily))
+
+    lilys.append(new Lily(new Vector2(lilys.last.pos.x + distance, (lilys.last.pos.y + y)%1020),nbLily))
   }
 
   def onLily(pos: Vector2, angle: Float, lil: ArrayBuffer[Lily]): Int = {
@@ -49,11 +43,9 @@ class Game {
       var res : Double = norme_vectPC*math.abs(sin(angle_between))
       if (res <= l.r) {
         if ((l.nbLily - nbposLily) % 2 == 1){
-          println(angle + "yeah, you jumped one lily!")
         return 1
         }
         else {
-          println(angle + "yeah, you jumped two lily!")
           return 2
         }
       }
@@ -62,54 +54,62 @@ class Game {
   }
 
   def jump(): Unit = { //if the center of the lily is in the frog's colliderbox, add score, else life-1
+    println("distance = " + distance)
+    println("nbelily = " + nbeLilyPassed)
+
+    if (nbeLilyPassed >= 15) {
+      distance = 500
+    } else if (nbeLilyPassed >= 40) {
+      distance = 600
+    }
+
     frog.onLily = false
+    if(frog.pos.y < 0 || frog.pos.y> 1080){
+      addLily()
+      for (lil <- lilys) {
+        lil.destinationX = lil.posi.x - distance
+      }
+      frog.destination = lilys.tail.head.posi.y
+      lilys = lilys.drop(1)
+    }else{
+
+      var nblilyJumped: Int = onLily(frog.pos, frog.direction, lilys)
+      if (nblilyJumped == 1) {
+        nbeLilyPassed += 1
+        score += 100
+        addLily()
+        for (lil <- lilys) {
+          lil.destinationX = lil.posi.x - distance
+        }
+        frog.destination = lilys.tail.head.posi.y
+        lilys = lilys.drop(1)
+      }
+      else if (nblilyJumped == 2) {
+        nbeLilyPassed += 2
+        score += 400
+        addLily()
+        addLily()
+        for (lil <- lilys) {
+          lil.destinationX = lil.posi.x - 2 * distance
+        }
+        frog.destination = lilys.tail.tail.head.posi.y
+        lilys = lilys.drop(1)
+        lilys = lilys.drop(1)
+      }
+      else {
+        for (lil <- lilys) {
+          lil.destinationX = lil.posi.x
+        }
+        if (!(270f > frog.direction && frog.direction > 90f)) {
+          frog.destination = (sin(frog.direction * math.Pi / 180) * 2000).toFloat
+          life -= 1
+        }
+      }
+    }
     for (lil <- lilys) {
       lil.mooving = true
     }
-    var nblilyJumped: Int = onLily(frog.pos, frog.direction, lilys)
-
-    if (nblilyJumped == 1) {
-        nbeLilyPassed += 1
-        score += 100
-      addLily()
-        for (lil <- lilys) {
-          lil.destinationX = lil.posi.x - 400
-          lil.mooving = true
-          println(lil.posi.x + " " + lil.posi.y)
-        }
-      frog.destination = lilys.tail.head.posi.y
-      println("position last lily " + lilys.last.posi.x)
-      lilys = lilys.drop(1)
-      }
-    else if (nblilyJumped == 2) {
-      nbeLilyPassed += 2
-      score += 200
-      addLily()
-      addLily()
-      for (lil <- lilys) {
-        lil.destinationX = lil.posi.x - 2*400
-        lil.mooving = true
-      }
-      frog.destination = lilys.tail.tail.head.posi.y
-      lilys = lilys.drop(1)
-      lilys = lilys.drop(1)
-      frog.onLily = true
-    }
-    else {
-      //var oldPos : Vector2 = frog.pos
-      if (!(270f > frog.direction && frog.direction > 90f)) {
-        frog.destination = (sin(frog.direction*math.Pi/180)*2*400).toFloat
-        life -= 1
-      }
-      frog.onLily = false
-      frog.posit = lilys.head.posi
-      println("frog pos"+frog.pos.y)
-    }
-    if(life == 0){
-      loose = !loose
-    }
   }
-
 
   def getScore(): String = {
     return "Score : " + score.toString

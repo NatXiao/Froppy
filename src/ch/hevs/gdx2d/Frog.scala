@@ -15,11 +15,11 @@ class Frog(var posit : Vector2) extends AnimatedObject(posit) {
   var onLily : Boolean = true //rotation on
   var destination : Float = _
 
-  val ANIMATION_LENGTH = 1.3f // Animation length (in seconds)
+  val ANIMATION_LENGTH = 1f // Animation length (in seconds)
   var currentTime = 0f // In seconds
 
   def onGraphicsRender(g: GdxGraphics): Unit = {
-    direction += 1
+
     if (direction >= 360) {
       direction = 0
     }
@@ -28,9 +28,7 @@ class Frog(var posit : Vector2) extends AnimatedObject(posit) {
       var animationTime: Float = currentTime / ANIMATION_LENGTH
       posit.y = Interpolation.linear.apply(posit.y, destination, animationTime)
       g.drawTransformedPicture(posit.x, posit.y, direction, 2, img_jump)
-      g.clear(Color.BLUE)
       if(posit.y == destination){
-        print("stop")
         onLily = true
         g.drawTransformedPicture(posit.x, posit.y, direction, 1, img)
         currentTime = 0f
@@ -38,6 +36,7 @@ class Frog(var posit : Vector2) extends AnimatedObject(posit) {
       }
     }
     else{
+      direction += 1
       currentTime = 0f
       g.drawTransformedPicture(posit.x, posit.y, direction, 1, img)
     }
