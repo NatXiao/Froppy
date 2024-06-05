@@ -24,6 +24,7 @@ class ScreenSelector (width : Int, height : Int) extends PortableApplication (wi
     s.registerScreen(classOf[Loose])
     s.registerScreen(classOf[Settings])
     s.registerScreen(classOf[LeaderBoard])
+
   }
 
   override def onGraphicRender(g: GdxGraphics): Unit = {
@@ -42,6 +43,10 @@ class ScreenSelector (width : Int, height : Int) extends PortableApplication (wi
   override def onKeyDown(keycode: Int): Unit = {
     super.onKeyDown(keycode)
 
+    val activeScreen = s.getActiveScreen
+    if(activeScreen != null){
+      activeScreen.onKeyDown(keycode)
+    }
     // Switch to next screen using all available transitions effects
     /*if (keycode == Input.Keys.SPACE) {
       print("jump")

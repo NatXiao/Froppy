@@ -2,10 +2,21 @@ package window.screens
 
 import ch.hevs.gdx2d.components.screen_management.RenderingScreen
 import ch.hevs.gdx2d.lib.GdxGraphics
+import com.badlogic.gdx.{Gdx, InputMultiplexer}
 import com.badlogic.gdx.graphics.Color
+import com.badlogic.gdx.scenes.scene2d.Stage
 
 class Menu extends RenderingScreen {
-  override def onInit(): Unit = {}
+  override def onInit(): Unit = {
+    val stage = new Stage()
+
+    val multiplexer = new InputMultiplexer()
+
+    multiplexer.addProcessor(stage)
+    multiplexer.addProcessor(Gdx.input.getInputProcessor())
+
+    Gdx.input.setInputProcessor(multiplexer)
+  }
 
   override def onGraphicRender(g: GdxGraphics): Unit = {
     g.clear(Color.DARK_GRAY)
@@ -17,5 +28,10 @@ class Menu extends RenderingScreen {
 
   override def dispose(): Unit = {
     super.dispose()
+  }
+
+  override def onKeyDown(keycode: Int): Unit = {
+    super.onKeyDown(keycode)
+    println("sboing Menu")
   }
 }

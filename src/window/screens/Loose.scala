@@ -18,4 +18,9 @@ class Loose extends RenderingScreen {
   override def dispose(): Unit = {
     super.dispose()
   }
+
+  override def onKeyDown(keycode: Int): Unit = {
+    super.onKeyDown(keycode)
+    println("sboing Loose")
+  }
 }
