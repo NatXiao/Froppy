@@ -17,6 +17,7 @@ object ScreenSelector{
 class GameWindow (width : Int, height : Int) extends PortableApplication(width, height)  {
   var game : Game =  _
 
+
   override def onInit(): Unit = {
     setTitle("Froppy")
     game = new Game
@@ -24,7 +25,6 @@ class GameWindow (width : Int, height : Int) extends PortableApplication(width, 
 
   override def onGraphicRender(g: GdxGraphics): Unit = {
     g.clear(Color.BLUE)
-    g.drawStringCentered(g.getScreenHeight / 2, "2 - Game Window")
     g.drawString(g.getScreenWidth-100, g.getScreenHeight-100,game.getScore())
     g.drawString(100, g.getScreenHeight-100, game.getLife())
     for (i <- game.lilys) {

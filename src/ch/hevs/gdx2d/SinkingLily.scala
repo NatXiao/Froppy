@@ -1,6 +1,9 @@
 package ch.hevs.gdx2d
-/**
-class SinkingLily(var positi : Vector2) extends Lily(positi) {
+
+import ch.hevs.gdx2d.lib.GdxGraphics
+import com.badlogic.gdx.math.Vector2
+
+class SinkingLily(var positi : Vector2, nberLily : Int) extends Lily(positi, nberLily) {
   private val nbeTurnMAX : Int = 2
   var sunk : Boolean = false
 
@@ -15,4 +18,3 @@ class SinkingLily(var positi : Vector2) extends Lily(positi) {
     radius += speed
   }
 }
-**/
