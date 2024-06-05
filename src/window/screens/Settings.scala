@@ -21,4 +21,9 @@ class Settings extends RenderingScreen {
     super.onKeyDown(keycode)
     println("sboing Settings")
   }
+
+  override def onClick(x: Int, y: Int, button: Int): Unit = {
+    super.onClick(x, y, button)
+    println("click Leaderboard")
+  }
 }

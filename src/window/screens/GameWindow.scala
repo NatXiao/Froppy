@@ -35,4 +35,10 @@ class GameWindow extends RenderingScreen  {
       game.jump()
     }
   }
+
+  override def onClick(x: Int, y: Int, button: Int): Unit = {
+    super.onClick(x, y, button)
+    println(s"click Game")
+
+  }
 }

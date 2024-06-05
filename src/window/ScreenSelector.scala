@@ -4,9 +4,11 @@ import ch.hevs.gdx2d.desktop.PortableApplication
 import ch.hevs.gdx2d.lib.utils.Logger
 import ch.hevs.gdx2d.lib.{GdxGraphics, ScreenManager}
 import com.badlogic.gdx.Input
-import window.screens.{GameWindow, LeaderBoard, Loose, Menu, Settings}
+import window.screens._
 
 object ScreenSelector{
+  var s = new ScreenManager
+
   def main(args : Array[String]): Unit = {
     new ScreenSelector ( 1920,1080)
   }
@@ -14,36 +16,42 @@ object ScreenSelector{
 
 class ScreenSelector (width : Int, height : Int) extends PortableApplication (width, height) {
 
-  private val s = new ScreenManager
-
   override def onInit(): Unit = {
     setTitle("Froppy")
     Logger.log("Game Launched, have fun playing Froppy !")
-    s.registerScreen(classOf[Menu])
-    s.registerScreen(classOf[GameWindow])
-    s.registerScreen(classOf[Loose])
-    s.registerScreen(classOf[Settings])
-    s.registerScreen(classOf[LeaderBoard])
+    ScreenSelector.s.registerScreen(classOf[Menu])
+    ScreenSelector.s.registerScreen(classOf[GameWindow])
+    ScreenSelector.s.registerScreen(classOf[Loose])
+    ScreenSelector.s.registerScreen(classOf[Settings])
+    ScreenSelector.s.registerScreen(classOf[LeaderBoard])
 
   }
 
   override def onGraphicRender(g: GdxGraphics): Unit = {
-    s.render(g)
+    ScreenSelector.s.render(g)
   }
 
   override def onClick(x: Int, y: Int, button: Int): Unit = {
+    super.onClick(x,y,button)
+
+    val activeScreen = ScreenSelector.s.getActiveScreen
+    if (activeScreen != null){
+      activeScreen.onClick(x,y,button)
+    }
+    /**
     // Delegate the click to the child class
     s.getActiveScreen.onClick(x, y, button)
 
     // Display the next screen without transition
     if (button == Input.Buttons.LEFT) s.activateNextScreen()
+    **/
   }
 
 
   override def onKeyDown(keycode: Int): Unit = {
     super.onKeyDown(keycode)
 
-    val activeScreen = s.getActiveScreen
+    val activeScreen = ScreenSelector.s.getActiveScreen
     if(activeScreen != null){
       activeScreen.onKeyDown(keycode)
     }
@@ -56,24 +64,30 @@ class ScreenSelector (width : Int, height : Int) extends PortableApplication (wi
       transactionTypeId = (transactionTypeId + 1) % ScreenManager.TransactionType.values.length
     }**/
     if (keycode == Input.Keys.NUM_1) {
-      s.transitionTo(0, ScreenManager.TransactionType.SLICE)
+      ScreenSelector.s.transitionTo(0, ScreenManager.TransactionType.SMOOTH)
 
-    } // s.activateScreen(0); Menu
+
+    } // ScreenSelector.s.activateScreen(0); Menu
 
     if (keycode == Input.Keys.NUM_2) {
-      s.transitionTo(1, ScreenManager.TransactionType.SLIDE)
+      ScreenSelector.s.transitionTo(1, ScreenManager.TransactionType.SMOOTH)
 
-    }// s.activateScreen(1);
+    }// ScreenSelector.s.activateScreen(1);
 
     if (keycode == Input.Keys.NUM_3) {
-      s.transitionTo(2, ScreenManager.TransactionType.SMOOTH)
+      ScreenSelector.s.transitionTo(2, ScreenManager.TransactionType.SMOOTH)
 
-    } // s.activateScreen(2);
+    } // ScreenSelector.s.activateScreen(2);
 
     if (keycode == Input.Keys.NUM_4) {
-      s.transitionTo(3, ScreenManager.TransactionType.SMOOTH)
+      ScreenSelector.s.transitionTo(3, ScreenManager.TransactionType.SMOOTH)
 
-    } // s.activateScreen(3);
+    } // ScreenSelector.s.activateScreen(3);
+
+    if (keycode == Input.Keys.NUM_5) {
+      ScreenSelector.s.transitionTo(4, ScreenManager.TransactionType.SMOOTH)
+
+    }// s.activateScreen(4);
   }
 
 }
