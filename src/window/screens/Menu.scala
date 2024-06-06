@@ -24,12 +24,24 @@ class Menu extends RenderingScreen {
   private val bSettings : Rectangle = new Rectangle(710f, 220f,500f,90f)
   private val bLeaderboard : Rectangle = new Rectangle(710f, 110f,500f,90f)
 
+
   override def onGraphicRender(g: GdxGraphics): Unit = {
-    g.clear(Color.DARK_GRAY)
+    //g.clear(Color.DARK_GRAY)$
+    g.setShader("data/shader/underwater.fp")
+    g.clear()
+    g.getShaderRenderer().setUniform("mouse", ScreenSelector.mouse)
+    g.drawShader(ScreenSelector.time)
+    ScreenSelector.time += Gdx.graphics.getDeltaTime
+
+
+
     g.drawStringCentered(g.getScreenHeight / 2, "1 - Menu")
     g.drawFilledRectangle(bNewGame.x+(bNewGame.width/2), bNewGame.y+(bNewGame.height/2), bNewGame.width,bNewGame.height,0f, Color.CYAN)
     g.drawFilledRectangle(bSettings.x+(bSettings.width/2), bSettings.y+(bSettings.height/2), bSettings.width,bSettings.height,0f, Color.BLACK)
     g.drawFilledRectangle(bLeaderboard.x+(bLeaderboard.width/2), bLeaderboard.y+(bLeaderboard.height/2), bLeaderboard.width,bLeaderboard.height,0f, Color.CHARTREUSE)
+    g.drawString(bNewGame.x + 150, bNewGame.y + 130,"-New Game-", ScreenSelector.optimus80)
+    g.drawString(bSettings.x + 170, bSettings.y + 60,"-Settings-", ScreenSelector.optimus40)
+    g.drawString(bLeaderboard.x + 130, bLeaderboard.y + 60,"-Leaderboard-", ScreenSelector.optimus40)
   }
 
   override def dispose(): Unit = {

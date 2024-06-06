@@ -3,12 +3,27 @@ package window
 import ch.hevs.gdx2d.desktop.PortableApplication
 import ch.hevs.gdx2d.lib.utils.Logger
 import ch.hevs.gdx2d.lib.{GdxGraphics, ScreenManager}
-import com.badlogic.gdx.Input
+import com.badlogic.gdx.{Gdx, Input}
+import com.badlogic.gdx.files.FileHandle
+import com.badlogic.gdx.graphics.Color
+import com.badlogic.gdx.graphics.g2d.BitmapFont
+import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator
+import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator.FreeTypeFontParameter
+import com.badlogic.gdx.math.Vector2
 import window.screens._
 
 object ScreenSelector{
   var s = new ScreenManager
   var sprite : String = "ISC"
+
+  var optimusF : FileHandle = null
+  var parameter : FreeTypeFontParameter = null
+  var generator : FreeTypeFontGenerator = null
+  var optimus80 : BitmapFont = null
+  var optimus40 : BitmapFont = null
+
+  var time : Float = 0
+  var mouse : Vector2 = new Vector2()
 
   val SCREEN_WIDTH : Int = 1920
   val SCREEN_HEIGHT : Int = 1080
@@ -29,6 +44,18 @@ class ScreenSelector (width : Int, height : Int) extends PortableApplication (wi
     ScreenSelector.s.registerScreen(classOf[Settings])
     ScreenSelector.s.registerScreen(classOf[LeaderBoard])
 
+    ScreenSelector.optimusF = Gdx.files.internal("data/font/OptimusPrinceps.ttf")
+    var parameter = new FreeTypeFontGenerator.FreeTypeFontParameter
+    var generator = new FreeTypeFontGenerator(ScreenSelector.optimusF)
+
+    parameter.size = generator.scaleForPixelHeight(80)
+    parameter.color = Color.LIGHT_GRAY
+    ScreenSelector.optimus80 = generator.generateFont(parameter)
+
+    parameter.size = generator.scaleForPixelHeight(40)
+    ScreenSelector.optimus40 = generator.generateFont(parameter)
+
+    generator.dispose()
   }
 
   override def onGraphicRender(g: GdxGraphics): Unit = {

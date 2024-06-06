@@ -53,7 +53,7 @@ class Game {
       var res : Double = norme_vectPC*math.abs(sin(angle_between))
       if (res <= l.r) {
         if ((l.nbLily - nbposLily) % 2 == 1){
-        return 1
+          return 1
         }
         else {
           return 2

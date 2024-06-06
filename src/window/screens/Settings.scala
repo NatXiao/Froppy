@@ -14,7 +14,8 @@ class Settings extends RenderingScreen {
   override def onGraphicRender(g: GdxGraphics): Unit = {
     g.clear(Color.DARK_GRAY)
     g.drawStringCentered(g.getScreenHeight / 2, "4 - Settings")
-    g.drawFilledRectangle(bMenu.x+(bMenu.width/2), bMenu.y+(bMenu.height/2), bMenu.width, bMenu.height,0f,Color.GOLD)
+    g.drawFilledRectangle(bMenu.x+(bMenu.width/2), bMenu.y+(bMenu.height/2), bMenu.width, bMenu.height,0f,Color.GRAY)
+    g.drawString(bMenu.x + (80), bMenu.y + 80,"-Menu-", ScreenSelector.optimus80)
   }
 
   override def dispose(): Unit = {
