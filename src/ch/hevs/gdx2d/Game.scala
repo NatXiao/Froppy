@@ -8,7 +8,7 @@ import scala.math.sin
 
 class Game {
   private var score: Int = 0
-  private var life: Int = 5
+  var life: Int = 5
   var nbeLilyPassed: Int = 0
   var nbLily = 2
   var distance: Int = 400

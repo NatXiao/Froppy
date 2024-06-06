@@ -20,9 +20,9 @@ class Menu extends RenderingScreen {
     Gdx.input.setInputProcessor(multiplexer)
   }
 
-  var bNewGame : Rectangle = new Rectangle(610f, 350f,700f,200f)
-  var bSettings : Rectangle = new Rectangle(710f, 220f,500f,90f)
-  var bLeaderboard : Rectangle = new Rectangle(710f, 110f,500f,90f)
+  private val bNewGame : Rectangle = new Rectangle(610f, 350f,700f,200f)
+  private val bSettings : Rectangle = new Rectangle(710f, 220f,500f,90f)
+  private val bLeaderboard : Rectangle = new Rectangle(710f, 110f,500f,90f)
 
   override def onGraphicRender(g: GdxGraphics): Unit = {
     g.clear(Color.DARK_GRAY)

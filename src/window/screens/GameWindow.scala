@@ -2,9 +2,10 @@ package window.screens
 
 import ch.hevs.gdx2d.Game
 import ch.hevs.gdx2d.components.screen_management.RenderingScreen
-import ch.hevs.gdx2d.lib.GdxGraphics
+import ch.hevs.gdx2d.lib.{GdxGraphics, ScreenManager}
 import com.badlogic.gdx.Input
 import com.badlogic.gdx.graphics.Color
+import window.ScreenSelector
 
 
 class GameWindow extends RenderingScreen  {
@@ -34,11 +35,12 @@ class GameWindow extends RenderingScreen  {
     if (keycode == Input.Keys.SPACE) {
       game.jump()
     }
+    if (game.life == 0) {
+      ScreenSelector.s.transitionTo(2, ScreenManager.TransactionType.SMOOTH)
+    }
   }
 
   override def onClick(x: Int, y: Int, button: Int): Unit = {
     super.onClick(x, y, button)
-    println(s"click Game")
-
   }
 }
