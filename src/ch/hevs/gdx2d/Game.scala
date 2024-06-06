@@ -2,6 +2,7 @@ package ch.hevs.gdx2d
 
 import com.badlogic.gdx.math.MathUtils.random
 import com.badlogic.gdx.math.Vector2
+import window.ScreenSelector
 
 import scala.collection.mutable.ArrayBuffer
 import scala.math.sin
@@ -12,6 +13,7 @@ class Game {
   var nbeLilyPassed: Int = 0
   var nbLily = 2
   var distance: Int = 400
+  val border : Int = 100
 
   var firstLily = new Lily(new Vector2(300, 200),0)
   var starter1 = new Lily(new Vector2(700, 500),1)
@@ -20,11 +22,18 @@ class Game {
   var frog: Frog = new Frog(lilys.head.pos) //create it on the first lily
 
   def addLily(): Unit = {
-    var trap : Int =random(1, 10)
-    var y: Int = random(240, 940)
+    if (nbeLilyPassed >= 15) {
+      distance = 500
+    } else if (nbeLilyPassed >= 40) {
+      distance = 600
+    }
+    var trap : Int = random(1, 10)
+    var y: Int = random(border, ScreenSelector.SCREEN_HEIGHT-border)
     nbLily += 1
-
-    lilys.append(new Lily(new Vector2(lilys.last.pos.x + distance, (lilys.last.pos.y + y)%1020),nbLily))
+    /*if(trap == 7){
+      lilys.append(new SinkingLily(new Vector2(lilys.last.pos.x + distance, y),nbLily))
+    }*/
+    lilys.append(new Lily(new Vector2(lilys.last.pos.x + distance, y),nbLily))
   }
 
   def onLily(pos: Vector2, angle: Float, lil: ArrayBuffer[Lily]): Int = {
@@ -53,16 +62,12 @@ class Game {
     return 0
   }
 
+
+
   def jump(): Unit = { //if the center of the lily is in the frog's colliderbox, add score, else life-1
+
     println("distance = " + distance)
     println("nbelily = " + nbeLilyPassed)
-
-    if (nbeLilyPassed >= 15) {
-      distance = 500
-    } else if (nbeLilyPassed >= 40) {
-      distance = 600
-    }
-
     frog.onLily = false
     if(frog.pos.y < 0 || frog.pos.y> 1080){
       addLily()
@@ -101,7 +106,7 @@ class Game {
           lil.destinationX = lil.posi.x
         }
         if (!(270f > frog.direction && frog.direction > 90f)) {
-          frog.destination = (sin(frog.direction * math.Pi / 180) * 2000).toFloat
+          frog.destination = (sin(frog.direction * math.Pi / 180)*distance).toFloat
           life -= 1
         }
       }
@@ -112,7 +117,7 @@ class Game {
   }
 
   def getScore(): String = {
-    return "Score : " + score.toString
+    return score.toString
   }
   def getLife() : String = {
     return "Life : " + life.toString

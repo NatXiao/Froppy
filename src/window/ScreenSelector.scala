@@ -8,9 +8,13 @@ import window.screens._
 
 object ScreenSelector{
   var s = new ScreenManager
+  var sprite : String = "ISC"
+
+  val SCREEN_WIDTH : Int = 1920
+  val SCREEN_HEIGHT : Int = 1080
 
   def main(args : Array[String]): Unit = {
-    new ScreenSelector ( 1920,1080)
+    new ScreenSelector ( SCREEN_WIDTH,SCREEN_HEIGHT)
   }
 }
 

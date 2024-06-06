@@ -7,11 +7,10 @@ import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.math.MathUtils.{cos, sin}
 import com.badlogic.gdx.math.{Interpolation, Vector2}
 
-class Lily(var posi: Vector2, var nbLily: Int) extends AnimatedObject(posi){
+class Lily(var posi: Vector2, var nbLily: Int, var rotationDirection : Boolean = true) extends AnimatedObject(posi){
   override var img: BitmapImage = new BitmapImage("data/images/lily.png")
   var r : Int = 200
   var rotationSpeed : Int = 1 //for more spicy playing!
-  var rotationDirection : Boolean = true //trigonometric direction true, else false
   var direction : Int = 0
   var mooving : Boolean = false
   var destinationX : Float = 0
@@ -38,7 +37,12 @@ class Lily(var posi: Vector2, var nbLily: Int) extends AnimatedObject(posi){
       }
     }
     else {
-      direction+= 1
+      if(rotationDirection){
+        direction+= 1
+      }else{
+        direction -=1
+      }
+
       currentTime = 0f
       g.drawTransformedPicture(posi.x, posi.y, direction, 2, img)
     }
