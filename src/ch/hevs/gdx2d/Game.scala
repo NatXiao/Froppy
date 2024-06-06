@@ -1,6 +1,6 @@
 package ch.hevs.gdx2d
 
-import com.badlogic.gdx.math.MathUtils.random
+import com.badlogic.gdx.math.MathUtils.{random, randomBoolean}
 import com.badlogic.gdx.math.Vector2
 import window.ScreenSelector
 
@@ -22,18 +22,19 @@ class Game {
   var frog: Frog = new Frog(lilys.head.pos) //create it on the first lily
 
   def addLily(): Unit = {
-    if (nbeLilyPassed >= 15) {
+    /*if (nbeLilyPassed >= 15) {
       distance = 500
     } else if (nbeLilyPassed >= 40) {
       distance = 600
-    }
-    var trap : Int = random(1, 10)
+    }*/
     var y: Int = random(border, ScreenSelector.SCREEN_HEIGHT-border)
     nbLily += 1
-    /*if(trap == 7){
-      lilys.append(new SinkingLily(new Vector2(lilys.last.pos.x + distance, y),nbLily))
-    }*/
-    lilys.append(new Lily(new Vector2(lilys.last.pos.x + distance, y),nbLily))
+    if(randomBoolean(0.3f)){
+      lilys.append(new SinkingLily(new Vector2(lilys.last.pos.x + distance, y),nbLily, randomBoolean()))
+    }else{
+      lilys.append(new Lily(new Vector2(lilys.last.pos.x + distance, y),nbLily, randomBoolean()))
+    }
+
   }
 
   def onLily(pos: Vector2, angle: Float, lil: ArrayBuffer[Lily]): Int = {
