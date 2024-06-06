@@ -19,6 +19,7 @@ class LeaderBoard extends RenderingScreen {
     //g.drawStringCentered(g.getScreenHeight / 2, "5 - LeaderBoard")
     g.drawFilledRectangle(bMenu.x+(bMenu.width/2), bMenu.y+(bMenu.height/2), bMenu.width,bMenu.height,0f,Color.GOLD)
     g.drawStringCentered(ScreenSelector.SCREEN_HEIGHT/2, getBestScores().mkString("\n"))
+    g.drawString(bMenu.x + (80), bMenu.y + 80,"-Menu-", ScreenSelector.optimus80)
   }
 
   override def dispose(): Unit = {

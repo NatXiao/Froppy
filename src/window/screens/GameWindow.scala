@@ -3,8 +3,7 @@ package window.screens
 import ch.hevs.gdx2d.Game
 import ch.hevs.gdx2d.components.screen_management.RenderingScreen
 import ch.hevs.gdx2d.lib.{GdxGraphics, ScreenManager}
-import com.badlogic.gdx.Input
-import com.badlogic.gdx.graphics.Color
+import com.badlogic.gdx.{Gdx, Input}
 import window.ScreenSelector
 
 import java.io.{FileOutputStream, PrintWriter}
@@ -19,7 +18,15 @@ class GameWindow extends RenderingScreen  {
   }
 
   override def onGraphicRender(g: GdxGraphics): Unit = {
-    g.clear(Color.BLUE)
+    g.clear()
+
+    if(g.getShaderRenderer == null){
+      g.setShader("data/shader/underwater.fp")
+    }
+    g.getShaderRenderer().setUniform("mouse", ScreenSelector.mouse)
+
+    g.drawShader(ScreenSelector.time)
+    ScreenSelector.time += Gdx.graphics.getDeltaTime
     g.drawString(g.getScreenWidth-100, g.getScreenHeight-100, "Score : " + game.getScore())
     g.drawString(100, g.getScreenHeight-100, game.getLife())
     for (i <- game.lilys) {
