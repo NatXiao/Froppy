@@ -14,13 +14,16 @@ import window.screens._
 
 object ScreenSelector{
   var s = new ScreenManager
+
   var sprite : String = "ISC"
 
-  var optimusF : FileHandle = null
+  var font : FileHandle = null
   var parameter : FreeTypeFontParameter = null
   var generator : FreeTypeFontGenerator = null
   var optimus80 : BitmapFont = null
   var optimus40 : BitmapFont = null
+  var FFF : BitmapFont = null
+  var FFFsmall : BitmapFont = null
 
   var time : Float = 0
   var mouse : Vector2 = new Vector2()
@@ -44,9 +47,9 @@ class ScreenSelector (width : Int, height : Int) extends PortableApplication (wi
     ScreenSelector.s.registerScreen(classOf[Settings])
     ScreenSelector.s.registerScreen(classOf[LeaderBoard])
 
-    ScreenSelector.optimusF = Gdx.files.internal("data/font/OptimusPrinceps.ttf")
+    ScreenSelector.font = Gdx.files.internal("data/font/OptimusPrinceps.ttf")
     var parameter = new FreeTypeFontGenerator.FreeTypeFontParameter
-    var generator = new FreeTypeFontGenerator(ScreenSelector.optimusF)
+    var generator = new FreeTypeFontGenerator(ScreenSelector.font)
 
     parameter.size = generator.scaleForPixelHeight(80)
     parameter.color = Color.LIGHT_GRAY
@@ -54,6 +57,18 @@ class ScreenSelector (width : Int, height : Int) extends PortableApplication (wi
 
     parameter.size = generator.scaleForPixelHeight(40)
     ScreenSelector.optimus40 = generator.generateFont(parameter)
+
+    ScreenSelector.font = Gdx.files.internal("data/font/FFF_Tusj.ttf")
+    parameter = new FreeTypeFontGenerator.FreeTypeFontParameter
+    generator = new FreeTypeFontGenerator(ScreenSelector.font)
+
+    parameter.size = generator.scaleForPixelHeight(200)
+    parameter.color = Color.GREEN
+    ScreenSelector.FFF = generator.generateFont(parameter)
+
+    parameter.size = generator.scaleForPixelHeight(80)
+    parameter.color = Color.LIGHT_GRAY
+    ScreenSelector.FFFsmall = generator.generateFont(parameter)
 
     generator.dispose()
   }

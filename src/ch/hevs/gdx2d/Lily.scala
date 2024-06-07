@@ -1,12 +1,9 @@
 package ch.hevs.gdx2d
 
 import ch.hevs.gdx2d.components.bitmaps.BitmapImage
-import ch.hevs.gdx2d.lib.{GdxGraphics, ScreenManager}
+import ch.hevs.gdx2d.lib.GdxGraphics
 import com.badlogic.gdx.Gdx
-import com.badlogic.gdx.graphics.Color
-import com.badlogic.gdx.math.MathUtils.{cos, sin}
 import com.badlogic.gdx.math.{Interpolation, Vector2}
-import window.ScreenSelector
 
 class Lily(var posi: Vector2, var nbLily: Int, var rotationDirection : Boolean = true, var powerUp : Boolean = false) extends AnimatedObject(posi){
   override var img: BitmapImage = new BitmapImage("data/images/lily.png")
@@ -48,9 +45,9 @@ class Lily(var posi: Vector2, var nbLily: Int, var rotationDirection : Boolean =
     }
     else {
       if(rotationDirection){
-        direction+= 1*rotationSpeed
+        direction += 1*rotationSpeed.toInt
       }else{
-        direction -=1*rotationSpeed
+        direction -=1*rotationSpeed.toInt
       }
 
       currentTime = 0f

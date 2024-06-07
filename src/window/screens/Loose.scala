@@ -14,11 +14,9 @@ class Loose extends RenderingScreen {
   private var bReplay : Rectangle = new Rectangle(1370f, 880f,400f,100f)
 
   override def onGraphicRender(g: GdxGraphics): Unit = {
-    g.clear(Color.DARK_GRAY)
-    g.drawStringCentered(g.getScreenHeight / 2, "3 - Loose")
-    g.drawFilledRectangle(bReplay.x + (bReplay.width / 2), bReplay.y + (bReplay.height / 2), bReplay.width, bReplay.height, 0f, Color.GRAY)
-    g.drawFilledRectangle(bLeaderboard.x + (bLeaderboard.width / 2), bLeaderboard.y + (bLeaderboard.height / 2), bLeaderboard.width, bLeaderboard.height, 0f, Color.GRAY)
-    g.drawFilledRectangle(bMenu.x + (bMenu.width / 2), bMenu.y + (bMenu.height / 2), bMenu.width, bMenu.height, 0f, Color.GRAY)
+    g.clear(Color.BLUE)
+    g.drawStringCentered(700,"Game over",ScreenSelector.FFF)
+
     g.drawString(bMenu.x + (80), bMenu.y + 80, "-Menu-", ScreenSelector.optimus80)
     g.drawString(bReplay.x + 70, bReplay.y + 80, "-Replay-", ScreenSelector.optimus80)
     g.drawString(bLeaderboard.x + 10, bLeaderboard.y + 80, "-Leaderboard-", ScreenSelector.optimus80)
