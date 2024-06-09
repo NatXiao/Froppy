@@ -15,8 +15,6 @@ import window.screens._
 object ScreenSelector{
   var s = new ScreenManager
 
-  var sprite : String = "ISC"
-
   var font : FileHandle = null
   var parameter : FreeTypeFontParameter = null
   var generator : FreeTypeFontGenerator = null
@@ -24,6 +22,7 @@ object ScreenSelector{
   var optimus40 : BitmapFont = null
   var FFF : BitmapFont = null
   var FFFsmall : BitmapFont = null
+  var skin : Boolean = false
 
   var time : Float = 0
   var mouse : Vector2 = new Vector2()
@@ -32,7 +31,7 @@ object ScreenSelector{
   val SCREEN_HEIGHT : Int = 1080
 
   def main(args : Array[String]): Unit = {
-    new ScreenSelector ( SCREEN_WIDTH,SCREEN_HEIGHT)
+    new ScreenSelector (SCREEN_WIDTH,SCREEN_HEIGHT)
   }
 }
 

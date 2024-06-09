@@ -10,10 +10,12 @@ class Settings extends RenderingScreen {
   override def onInit(): Unit = {}
 
   private val bMenu : Rectangle = new Rectangle(1370f, 880f,400f,100f)
+  private val bChangeSkin : Rectangle = new Rectangle(610f, 350f,700f,200f)
 
   override def onGraphicRender(g: GdxGraphics): Unit = {
     g.clear(Color.DARK_GRAY)
     g.drawStringCentered(850,"Settings",ScreenSelector.FFF)
+    g.drawString(bChangeSkin.x + 150, bChangeSkin.y + 130,"-HES Skin-", ScreenSelector.optimus80)
     g.drawString(bMenu.x + (80), bMenu.y + 80,"-Menu-", ScreenSelector.optimus80)
   }
 
@@ -26,10 +28,17 @@ class Settings extends RenderingScreen {
   }
 
   override def onClick(x: Int, y: Int, button: Int): Unit = {
+    var click : Int = 0
     super.onClick(x, y, button)
     val posClick: Vector2 = new Vector2(x, y)
     if (bMenu.contains(posClick)) {
       ScreenSelector.s.transitionTo(0, ScreenManager.TransactionType.SMOOTH)
+    }
+    if (bChangeSkin.contains(posClick)) {
+      click += 1
+      if(click % 2 != 0){
+        ScreenSelector.skin = !ScreenSelector.skin
+      }
     }
   }
 }

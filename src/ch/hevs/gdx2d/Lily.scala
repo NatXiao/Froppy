@@ -4,9 +4,14 @@ import ch.hevs.gdx2d.components.bitmaps.BitmapImage
 import ch.hevs.gdx2d.lib.GdxGraphics
 import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.math.{Interpolation, Vector2}
+import window.ScreenSelector
 
 class Lily(var posi: Vector2, var nbLily: Int, var rotationDirection : Boolean = true, var powerUp : Boolean = false) extends AnimatedObject(posi){
-  override var img: BitmapImage = new BitmapImage("data/images/lily.png")
+  var fileName : String = "data/images/lily.png"
+  if(ScreenSelector.skin){
+    fileName = "data/images/ISC_logo.png"
+  }
+  override var img: BitmapImage = new BitmapImage(fileName)
   var r : Int = 200
   var rotationSpeed : Double = 1 //for more spicy playing!
   var direction : Int = 0
@@ -40,7 +45,6 @@ class Lily(var posi: Vector2, var nbLily: Int, var rotationDirection : Boolean =
         mooving = false
         g.drawTransformedPicture(posi.x, posi.y, direction, 2, img)
         currentTime = 0f
-
       }
     }
     else {

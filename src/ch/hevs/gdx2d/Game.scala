@@ -63,24 +63,10 @@ class Game {
     return 0
   }
 
-
-
   def jump(): Unit = { //if the center of the lily is in the frog's colliderbox, add score, else life-1
-
-    println("distance = " + distance)
-    println("nbelily = " + nbeLilyPassed)
-    frog.onLily = false
-    if(frog.pos.y < 0 || frog.pos.y> 1080){
-      addLily()
-      for (lil <- lilys) {
-        lil.destinationX = lil.posi.x - distance
-      }
-      frog.destination = lilys.tail.head.posi.y
-      lilys = lilys.drop(1)
-    }else{
-
-      var nblilyJumped: Int = onLily(frog.pos, frog.direction, lilys)
+    val nblilyJumped: Int = onLily(frog.pos, frog.direction, lilys)
       if (nblilyJumped == 1) {
+        frog.onLily = false
         nbeLilyPassed += 1
         score += 100
         addLily()
@@ -91,6 +77,7 @@ class Game {
         lilys = lilys.drop(1)
       }
       else if (nblilyJumped == 2) {
+        frog.onLily = false
         nbeLilyPassed += 2
         score += 400
         addLily()
@@ -103,15 +90,20 @@ class Game {
         lilys = lilys.drop(1)
       }
       else {
-        for (lil <- lilys) {
-          lil.destinationX = lil.posi.x
-        }
         if (!(270f > frog.direction && frog.direction > 90f)) {
-          frog.destination = (sin(frog.direction * math.Pi / 180)*distance).toFloat
+          frog.onLily = false
+          addLily()
+          addLily()
+          for (lil <- lilys) {
+            lil.destinationX = lil.posi.x - 2 * distance
+          }
+          println(frog.direction)
+          frog.destination = (sin(frog.direction * math.Pi / 180)*2*distance).toFloat
           life -= 1
+          //frog.passed = false
         }
       }
-    }
+    //}
     for (lil <- lilys) {
       lil.mooving = true
     }
