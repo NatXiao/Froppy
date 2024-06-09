@@ -3,8 +3,6 @@ import ch.hevs.gdx2d.components.bitmaps.BitmapImage
 import ch.hevs.gdx2d.components.physics.primitives.PhysicsCircle
 import ch.hevs.gdx2d.lib.GdxGraphics
 import com.badlogic.gdx.Gdx
-import com.badlogic.gdx.graphics.Color
-import com.badlogic.gdx.math.MathUtils.{cos, sin}
 import com.badlogic.gdx.math.{Interpolation, Vector2}
 import window.ScreenSelector
 
@@ -15,7 +13,7 @@ class Frog(var posit : Vector2) extends AnimatedObject(posit) {
 
   if (ScreenSelector.skin) {
     fileName = "data/images/pam.png"
-    fileName_jump = "data/images/pingouin.png"
+    fileName_dead = "data/images/pingouin.png"
     fileName_jump = "data/images/Jacquemet.png"
   }
   var img_jump = new BitmapImage(fileName_jump)
@@ -25,41 +23,47 @@ class Frog(var posit : Vector2) extends AnimatedObject(posit) {
   var direction : Float = 0 //degree
   var onLily : Boolean = true //rotation on
   var destination : Float = _
-/*
-  var alpha = 0.3f
-  var dir1 = -1
-  var passed : Boolean = _
- */
+  var state : Vector2 = _
+
+  var passed : Boolean = true
 
   val ANIMATION_LENGTH = 1f // Animation length (in seconds)
   var currentTime = 0f // In seconds
 
   def onGraphicsRender(g: GdxGraphics): Unit = {
-
     if (direction >= 360) {
       direction = 0
     }
-/*    if (dir1 > 0) alpha += 0.01f
-    else alpha += -0.01f*/
     if(!onLily){
       currentTime += Gdx.graphics.getDeltaTime
+      println("current time : " + currentTime)
+      println("delta time : " + Gdx.graphics.getDeltaTime)
       var animationTime: Float = currentTime / ANIMATION_LENGTH
-      posit.y = Interpolation.linear.apply(posit.y, destination, animationTime)
+      println("animation time : " + animationTime)
+      posit.y = Interpolation.linear.apply(state.y, destination, animationTime)
       g.drawTransformedPicture(posit.x, posit.y, direction, 2, img_jump)
-      if(posit.y == destination){
+      println( "posit + destination : "+posit.y + " " + destination)
+
+      if(isAtDest(destination, posit.y, state.y)){
         onLily = true
-        g.drawTransformedPicture(posit.x, posit.y, direction, 1, img)
         currentTime = 0f
       }
-      /*if (!passed) {
-        g.drawAlphaPicture(posit.x, posit.y, direction, 2, alpha, img_dead)
-      }*/
+    }
+    else if (!passed) {
+      currentTime += Gdx.graphics.getDeltaTime
+      var animationTimeDeath: Float = currentTime / ANIMATION_LENGTH
+      var alpha = Interpolation.linear.apply(0.9f, 0, animationTimeDeath)
+        g.drawAlphaPicture(posit.x, posit.y, direction, 1, alpha, img_dead)
+      if(alpha <= 0){
+        passed = true
+        posit = state
+      }
+      println("alpha : " + alpha)
     }
     else{
       direction += 1
       currentTime = 0f
       g.drawTransformedPicture(posit.x, posit.y, direction, 1, img)
     }
-
   }
 }

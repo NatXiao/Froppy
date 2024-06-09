@@ -19,7 +19,7 @@ class Game {
   var starter1 = new Lily(new Vector2(700, 500),1)
   var starter2 = new Lily(new Vector2(1100, 200),2)
   var lilys: ArrayBuffer[Lily] = ArrayBuffer(firstLily, starter1, starter2)
-  var frog: Frog = new Frog(lilys.head.pos) //create it on the first lily
+  var frog: Frog = new Frog(new Vector2(lilys.head.pos)) //create it on the first lily
 
   def addLily(): Unit = {
     /*if (nbeLilyPassed >= 15) {
@@ -65,46 +65,38 @@ class Game {
 
   def jump(): Unit = { //if the center of the lily is in the frog's colliderbox, add score, else life-1
     val nblilyJumped: Int = onLily(frog.pos, frog.direction, lilys)
-      if (nblilyJumped == 1) {
+      if (nblilyJumped != 0) {
         frog.onLily = false
+        frog.state = new Vector2(frog.posit)
         nbeLilyPassed += 1
         score += 100
-        addLily()
+        for(i <- 0 until nblilyJumped){
+          addLily()
+        }
         for (lil <- lilys) {
-          lil.destinationX = lil.posi.x - distance
+          lil.destinationX = lil.posi.x - nblilyJumped*distance
         }
         frog.destination = lilys.tail.head.posi.y
-        lilys = lilys.drop(1)
-      }
-      else if (nblilyJumped == 2) {
-        frog.onLily = false
-        nbeLilyPassed += 2
-        score += 400
-        addLily()
-        addLily()
-        for (lil <- lilys) {
-          lil.destinationX = lil.posi.x - 2 * distance
+        for (i <- 0 until nblilyJumped) {
+          lilys = lilys.drop(1)
         }
-        frog.destination = lilys.tail.tail.head.posi.y
-        lilys = lilys.drop(1)
-        lilys = lilys.drop(1)
       }
       else {
         if (!(270f > frog.direction && frog.direction > 90f)) {
           frog.onLily = false
           addLily()
           addLily()
-          for (lil <- lilys) {
-            lil.destinationX = lil.posi.x - 2 * distance
-          }
           println(frog.direction)
           frog.destination = (sin(frog.direction * math.Pi / 180)*2*distance).toFloat
           life -= 1
-          //frog.passed = false
+          frog.passed = false
+          lilys = lilys.dropRight(1)
+          lilys = lilys.dropRight(1)
+          frog.posit = new Vector2(lilys.head.posi)
         }
       }
-    //}
     for (lil <- lilys) {
+      lil.state = new Vector2(lil.posi)
       lil.mooving = true
     }
   }

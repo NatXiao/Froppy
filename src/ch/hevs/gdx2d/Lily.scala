@@ -17,6 +17,7 @@ class Lily(var posi: Vector2, var nbLily: Int, var rotationDirection : Boolean =
   var direction : Int = 0
   var mooving : Boolean = false
   var destinationX : Float = 0
+  var state : Vector2 = _
   if(powerUp){
     //speed-up
     rotationSpeed = 0.5
@@ -39,9 +40,9 @@ class Lily(var posi: Vector2, var nbLily: Int, var rotationDirection : Boolean =
     if(mooving){
       currentTime += Gdx.graphics.getDeltaTime
       var animationTime: Float = currentTime / ANIMATION_LENGTH
-      posi.x = Interpolation.linear.apply(posi.x, destinationX, animationTime)
+      posi.x = Interpolation.linear.apply(state.x, destinationX, animationTime)
       g.drawTransformedPicture(posi.x, posi.y, direction, 2, img)
-      if (posi.x == destinationX) {
+      if (isAtDest(destinationX, posi.x, state.x)) {
         mooving = false
         g.drawTransformedPicture(posi.x, posi.y, direction, 2, img)
         currentTime = 0f
@@ -53,7 +54,6 @@ class Lily(var posi: Vector2, var nbLily: Int, var rotationDirection : Boolean =
       }else{
         direction -=1*rotationSpeed.toInt
       }
-
       currentTime = 0f
       g.drawTransformedPicture(posi.x, posi.y, direction, 2, img)
     }

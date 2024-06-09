@@ -39,6 +39,7 @@ class Menu extends RenderingScreen {
     g.drawString(bSettings.x + 170, bSettings.y + 60,"-Settings-", ScreenSelector.optimus40)
     g.drawString(bLeaderboard.x + 130, bLeaderboard.y + 60,"-Leaderboard-", ScreenSelector.optimus40)
     g.drawStringCentered(900,"Froppy",ScreenSelector.FFF)
+    g.drawSchoolLogo()
   }
 
   override def dispose(): Unit = {
