@@ -5,6 +5,9 @@ import com.badlogic.gdx.math.Vector2
 
 abstract class AnimatedObject(var pos : Vector2) {
   var img : BitmapImage
+  var currentTime: Float = 0
+  val ANIMATION_LENGTH: Float = 0.5f
+  var state : Vector2 = _
 
   def isAtDest(destination : Float, currentPosition : Float, state :Float ) : Boolean = {
     val sign = destination - state

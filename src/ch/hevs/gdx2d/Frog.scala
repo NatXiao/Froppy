@@ -23,12 +23,8 @@ class Frog(var posit : Vector2) extends AnimatedObject(posit) {
   var direction : Float = 0 //degree
   var onLily : Boolean = true //rotation on
   var destination : Float = _
-  var state : Vector2 = _
 
   var passed : Boolean = true
-
-  val ANIMATION_LENGTH = 1f // Animation length (in seconds)
-  var currentTime = 0f // In seconds
 
   def onGraphicsRender(g: GdxGraphics): Unit = {
     if (direction >= 360) {
@@ -56,7 +52,7 @@ class Frog(var posit : Vector2) extends AnimatedObject(posit) {
         g.drawAlphaPicture(posit.x, posit.y, direction, 1, alpha, img_dead)
       if(alpha <= 0){
         passed = true
-        posit = state
+        posit = new Vector2(state)
       }
       println("alpha : " + alpha)
     }

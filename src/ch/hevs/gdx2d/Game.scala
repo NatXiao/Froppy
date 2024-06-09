@@ -65,18 +65,18 @@ class Game {
 
   def jump(): Unit = { //if the center of the lily is in the frog's colliderbox, add score, else life-1
     val nblilyJumped: Int = onLily(frog.pos, frog.direction, lilys)
+    frog.state = new Vector2(frog.posit)
       if (nblilyJumped != 0) {
         frog.onLily = false
-        frog.state = new Vector2(frog.posit)
-        nbeLilyPassed += 1
-        score += 100
+        nbeLilyPassed += nblilyJumped
+        score += 100*nblilyJumped
         for(i <- 0 until nblilyJumped){
           addLily()
         }
         for (lil <- lilys) {
-          lil.destinationX = lil.posi.x - nblilyJumped*distance
+          lil.destinationX = lil.posi.x - nblilyJumped * distance
         }
-        frog.destination = lilys.tail.head.posi.y
+        frog.destination = lilys(nblilyJumped).posi.y
         for (i <- 0 until nblilyJumped) {
           lilys = lilys.drop(1)
         }

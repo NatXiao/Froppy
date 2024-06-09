@@ -17,20 +17,16 @@ class Lily(var posi: Vector2, var nbLily: Int, var rotationDirection : Boolean =
   var direction : Int = 0
   var mooving : Boolean = false
   var destinationX : Float = 0
-  var state : Vector2 = _
-  if(powerUp){
+
+  /*if(powerUp){
     //speed-up
     rotationSpeed = 0.5
     //slow-up
     rotationSpeed = 2
     //+1 life
     //arrow
-    img = new BitmapImage("data/images/lily.png")
-  }
-
-  //animations
-  private var currentTime: Float = 0
-  private val ANIMATION_LENGTH: Float = 1f
+    //img = new BitmapImage("data/images/lily.png")
+  }*/
 
   def onGraphicsRender(g: GdxGraphics): Unit = {
     //DEPEND ON TIME
