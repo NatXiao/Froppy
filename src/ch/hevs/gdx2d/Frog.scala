@@ -32,14 +32,9 @@ class Frog(var posit : Vector2) extends AnimatedObject(posit) {
     }
     if(!onLily){
       currentTime += Gdx.graphics.getDeltaTime
-      println("current time : " + currentTime)
-      println("delta time : " + Gdx.graphics.getDeltaTime)
       var animationTime: Float = currentTime / ANIMATION_LENGTH
-      println("animation time : " + animationTime)
       posit.y = Interpolation.linear.apply(state.y, destination, animationTime)
       g.drawTransformedPicture(posit.x, posit.y, direction, 2, img_jump)
-      println( "posit + destination : "+posit.y + " " + destination)
-
       if(isAtDest(destination, posit.y, state.y)){
         onLily = true
         currentTime = 0f
@@ -49,12 +44,11 @@ class Frog(var posit : Vector2) extends AnimatedObject(posit) {
       currentTime += Gdx.graphics.getDeltaTime
       var animationTimeDeath: Float = currentTime / ANIMATION_LENGTH
       var alpha = Interpolation.linear.apply(0.9f, 0, animationTimeDeath)
-        g.drawAlphaPicture(posit.x, posit.y, direction, 1, alpha, img_dead)
+      g.drawAlphaPicture(posit.x, posit.y, direction, 1, alpha, img_dead)
       if(alpha <= 0){
         passed = true
         posit = new Vector2(state)
       }
-      println("alpha : " + alpha)
     }
     else{
       direction += 1

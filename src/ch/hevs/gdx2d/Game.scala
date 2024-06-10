@@ -22,11 +22,12 @@ class Game {
   var frog: Frog = new Frog(new Vector2(lilys.head.pos)) //create it on the first lily
 
   def addLily(): Unit = {
-    /*if (nbeLilyPassed >= 15) {
+    if (nbeLilyPassed >= 15) {
       distance = 500
-    } else if (nbeLilyPassed >= 40) {
+    }
+    if (nbeLilyPassed >= 40) {
       distance = 600
-    }*/
+    }
     var y: Int = random(border, ScreenSelector.SCREEN_HEIGHT-border)
     nbLily += 1
     if(randomBoolean(0.3f)){
@@ -43,7 +44,6 @@ class Game {
       return 0
     }
     var nbposLily : Int = lil.head.nbLily
-    println(nbposLily)
     for(l <- lil.tail) { //wtf formula to detect if reached or not the water lily
       var angle2 = angle*math.Pi/180
       var vectPC : Vector2 = new Vector2(l.pos.x - pos.x, l.pos.y - pos.y)
@@ -73,11 +73,13 @@ class Game {
         for(i <- 0 until nblilyJumped){
           addLily()
         }
+        var jumpDistance : Float = (lilys(nblilyJumped).posi.x-frog.pos.x)
+        println("jump distnace"+jumpDistance)
         for (lil <- lilys) {
-          lil.destinationX = lil.posi.x - nblilyJumped * distance
+          lil.destinationX = lil.posi.x - jumpDistance
         }
         frog.destination = lilys(nblilyJumped).posi.y
-        for (i <- 0 until nblilyJumped) {
+        for (_ <- 0 until nblilyJumped) {
           lilys = lilys.drop(1)
         }
       }
@@ -100,7 +102,6 @@ class Game {
       lil.mooving = true
     }
   }
-
   def getScore(): String = {
     return score.toString
   }
