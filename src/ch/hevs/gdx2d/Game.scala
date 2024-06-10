@@ -22,11 +22,11 @@ class Game {
   var frog: Frog = new Frog(new Vector2(lilys.head.pos)) //create it on the first lily
 
   def addLily(): Unit = {
-    if (nbeLilyPassed >= 15) {
-      distance = 500
+    if(nbeLilyPassed >= 40){ //last level : random distance
+      distance = random(border*2, ScreenSelector.SCREEN_WIDTH/2-border)
     }
-    if (nbeLilyPassed >= 40) {
-      distance = 600
+    if (nbeLilyPassed % 10 == 0) { // level up each 10 lilys passed
+      distance += 100
     }
     var y: Int = random(border, ScreenSelector.SCREEN_HEIGHT-border)
     nbLily += 1
@@ -35,21 +35,18 @@ class Game {
     }else{
       lilys.append(new Lily(new Vector2(lilys.last.pos.x + distance, y),nbLily, randomBoolean()))
     }
-
   }
 
   def onLily(pos: Vector2, angle: Float, lil: ArrayBuffer[Lily]): Int = {
     //distance center lily and the direction
-    if(270f>angle && angle > 90f){
+    if(270f>angle && angle > 90f){ //can't jump backward
       return 0
     }
     var nbposLily : Int = lil.head.nbLily
     for(l <- lil.tail) { //wtf formula to detect if reached or not the water lily
-      var angle2 = angle*math.Pi/180
       var vectPC : Vector2 = new Vector2(l.pos.x - pos.x, l.pos.y - pos.y)
       var norme_vectPC : Double = math.sqrt(vectPC.x*vectPC.x + vectPC.y*vectPC.y)
-      var angle_alpha : Double = math.atan((l.pos.y-pos.y)/(l.pos.x - pos.x))//angle with beautiful trigo in radian
-      var angle_between : Double = angle2 - angle_alpha
+      var angle_between : Double = angle*math.Pi/180 - math.atan((l.pos.y-pos.y)/(l.pos.x - pos.x))
       var res : Double = norme_vectPC*math.abs(sin(angle_between))
       if (res <= l.r) {
         if ((l.nbLily - nbposLily) % 2 == 1){
@@ -69,12 +66,11 @@ class Game {
       if (nblilyJumped != 0) {
         frog.onLily = false
         nbeLilyPassed += nblilyJumped
-        score += 100*nblilyJumped
+        score += 100*(nblilyJumped*1.4).round.toInt //add a bonus if more than 1 lily passed
         for(i <- 0 until nblilyJumped){
           addLily()
         }
-        var jumpDistance : Float = (lilys(nblilyJumped).posi.x-frog.pos.x)
-        println("jump distnace"+jumpDistance)
+        var jumpDistance : Float = lilys(nblilyJumped).posi.x-frog.pos.x
         for (lil <- lilys) {
           lil.destinationX = lil.posi.x - jumpDistance
         }
@@ -86,14 +82,9 @@ class Game {
       else {
         if (!(270f > frog.direction && frog.direction > 90f)) {
           frog.onLily = false
-          addLily()
-          addLily()
-          println(frog.direction)
           frog.destination = (sin(frog.direction * math.Pi / 180)*2*distance).toFloat
           life -= 1
           frog.passed = false
-          lilys = lilys.dropRight(1)
-          lilys = lilys.dropRight(1)
           frog.posit = new Vector2(lilys.head.posi)
         }
       }
@@ -102,10 +93,10 @@ class Game {
       lil.mooving = true
     }
   }
-  def getScore(): String = {
+  def getScore: String = {
     return score.toString
   }
-  def getLife() : String = {
+  def getLife: String = {
     return "Life : " + life.toString
   }
 }

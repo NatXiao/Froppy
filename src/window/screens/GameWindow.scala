@@ -35,8 +35,8 @@ class GameWindow extends RenderingScreen  {
     if (game.frog.onLily) {
       game.frog.direction = game.lilys.head.direction
     }
-    g.drawString(g.getScreenWidth - 100, g.getScreenHeight - 100, "Score : " + game.getScore())
-    g.drawString(100, g.getScreenHeight - 100, game.getLife())
+    g.drawString(g.getScreenWidth - 100, g.getScreenHeight - 100, "Score : " + game.getScore)
+    g.drawString(100, g.getScreenHeight - 100, game.getLife)
     g.drawFPS()
   }
 
@@ -50,7 +50,7 @@ class GameWindow extends RenderingScreen  {
       try{
         val fs = new FileOutputStream("data/bestScore.txt", true)
         val pw = new PrintWriter(fs)
-        pw.println(game.getScore())
+        pw.println(game.getScore)
         pw.close()
       }catch {
         case e: Exception =>

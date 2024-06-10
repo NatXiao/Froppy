@@ -7,7 +7,6 @@ import com.badlogic.gdx.math.{Interpolation, Vector2}
 import window.ScreenSelector
 
 class SinkingLily(var positi : Vector2, nberLily : Int, rotation : Boolean = true) extends Lily(positi, nberLily, rotation) {
-  private val nbeTurnMAX : Int = 2
   var sunk : Boolean = false
   var fileName_sink: String = "data/images/sinkinglily.png"
   if (ScreenSelector.skin) {
@@ -31,8 +30,8 @@ class SinkingLily(var positi : Vector2, nberLily : Int, rotation : Boolean = tru
       }
     }
     else{
+      super.onGraphicsRender(g)
       g.drawTransformedPicture(posi.x, posi.y, direction, 2, imag)
-      //super.onGraphicsRender(g)
     }
   }
 }
