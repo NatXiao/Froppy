@@ -15,7 +15,6 @@ class SinkingLily(var positi : Vector2, nberLily : Int, rotation : Boolean = tru
   var imag : BitmapImage = new BitmapImage(fileName_sink)
   //override var img = new BitmapImage(fileName_sink)
   var alpha = 0.3f
-  var dir1 = -1
   var numbTurn : Int = 0
 
   override def onGraphicsRender(g : GdxGraphics) = {

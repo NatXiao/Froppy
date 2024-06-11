@@ -1,7 +1,11 @@
-# Hello `gdx2d` for Scala !
+# Froppy, a game with a cute little frog
 
-Desktop bootstrap project based on the latest `gdx2d` library. The project is ready to use in _IntelliJ_. It uses the `gdx2d-desktop` library version `1.2.1`.
+### How to launch the game : 
+Go to the [`ScreenSelector`](src/window/ScreenSelector)
 
-The `gdx2d` sources are available in the library Jar file (in the `libs` folder). The Javadoc API of the library can be found [here](https://hevs-isi.github.io/gdx2d/javadoc/).
+Our game is mainly in `src/window`, but our classes are in `src/ch/hevs/gdx2d` directory. All our images, fonts or shaders are in data
 
-Java 11 or higher is required to run this project. An `Ant` build script is provided to export the project as a runnable Jar (available in the `dist` folder).
+You can change the skin of the game in the Settings if you want a funny reference to our school!
+
+Here is a small preview of our game : 
+![img.png](img.png)

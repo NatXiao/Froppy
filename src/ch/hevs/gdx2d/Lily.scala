@@ -8,13 +8,15 @@ import window.ScreenSelector
 
 class Lily(var posi: Vector2, var nbLily: Int, var rotationDirection : Boolean = true, var powerUp : Boolean = false) extends AnimatedObject(posi){
   var fileName : String = "data/images/lily.png"
+  var scale : Float = 2f
+
   if(ScreenSelector.skin){
     fileName = "data/images/ISC_logo.png"
   }
   override var img: BitmapImage = new BitmapImage(fileName)
   var r : Int = 200
   var rotationSpeed : Double = 1 //for more spicy playing!
-  var direction : Int = 0
+  override var direction : Int = 0
   var mooving : Boolean = false
   var destinationX : Float = 0
 
@@ -28,19 +30,20 @@ class Lily(var posi: Vector2, var nbLily: Int, var rotationDirection : Boolean =
     //img = new BitmapImage("data/images/lily.png")
   }*/
 
-  def onGraphicsRender(g: GdxGraphics): Unit = {
-    //DEPEND ON TIME
+  override def onGraphicsRender(g: GdxGraphics): Unit = {
+
     if (direction >= 360 || direction <= -360) {
       direction = 0
     }
+
     if(mooving){
       currentTime += Gdx.graphics.getDeltaTime
       var animationTime: Float = currentTime / ANIMATION_LENGTH
       posi.x = Interpolation.linear.apply(state.x, destinationX, animationTime)
-      g.drawTransformedPicture(posi.x, posi.y, direction, 2, img)
+      g.drawTransformedPicture(posi.x, posi.y, direction, scale, img)
       if (isAtDest(destinationX, posi.x, state.x)) {
         mooving = false
-        g.drawTransformedPicture(posi.x, posi.y, direction, 2, img)
+        g.drawTransformedPicture(posi.x, posi.y, direction, scale, img)
         currentTime = 0f
       }
     }
@@ -51,7 +54,7 @@ class Lily(var posi: Vector2, var nbLily: Int, var rotationDirection : Boolean =
         direction -=1*rotationSpeed.toInt
       }
       currentTime = 0f
-      g.drawTransformedPicture(posi.x, posi.y, direction, 2, img)
+      g.drawTransformedPicture(posi.x, posi.y, direction, scale, img)
     }
   }
 }

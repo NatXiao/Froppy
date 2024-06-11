@@ -10,6 +10,7 @@ class Frog(var posit : Vector2) extends AnimatedObject(posit) {
   var fileName : String = "data/images/frog_arrow.png"
   var fileName_jump : String = "data/images/jumping_frog.png"
   var fileName_dead : String = "data/images/dead_frog.png"
+  var scale : Float = 1f
 
   if (ScreenSelector.skin) {
     fileName = "data/images/pam.png"
@@ -20,40 +21,43 @@ class Frog(var posit : Vector2) extends AnimatedObject(posit) {
   var img_dead = new BitmapImage(fileName_dead)
   override var img: BitmapImage = new BitmapImage(fileName)
   var r : Int = 30
-  var direction : Float = 0 //degree
-  var onLily : Boolean = true //rotation on
+
+  override var direction : Int = 0 //degree
   var destination : Float = _
 
+  var onLily : Boolean = true //rotation on
   var passed : Boolean = true
 
-  def onGraphicsRender(g: GdxGraphics): Unit = {
+  override def onGraphicsRender(g: GdxGraphics): Unit = {
+
     if (direction >= 360) {
       direction = 0
     }
-    if(!onLily){
+
+    if(!onLily){ //jump
       currentTime += Gdx.graphics.getDeltaTime
       var animationTime: Float = currentTime / ANIMATION_LENGTH
       posit.y = Interpolation.linear.apply(state.y, destination, animationTime)
-      g.drawTransformedPicture(posit.x, posit.y, direction, 2, img_jump)
+      g.drawTransformedPicture(posit.x, posit.y, direction, scale*2, img_jump)
       if(isAtDest(destination, posit.y, state.y)){
         onLily = true
         currentTime = 0f
       }
     }
-    else if (!passed) {
+    else if (!passed) { //death
       currentTime += Gdx.graphics.getDeltaTime
       var animationTimeDeath: Float = currentTime / ANIMATION_LENGTH
       var alpha = Interpolation.linear.apply(0.9f, 0, animationTimeDeath)
-      g.drawAlphaPicture(posit.x, posit.y, direction, 1, alpha, img_dead)
+      g.drawAlphaPicture(posit.x, posit.y, direction, scale, alpha, img_dead)
       if(alpha <= 0){
         passed = true
         posit = new Vector2(state)
       }
     }
-    else{
+    else{ //merry go round!
       direction += 1
       currentTime = 0f
-      g.drawTransformedPicture(posit.x, posit.y, direction, 1, img)
+      g.drawTransformedPicture(posit.x, posit.y, direction, scale, img)
     }
   }
 }

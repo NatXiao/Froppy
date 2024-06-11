@@ -11,16 +11,18 @@ class Game {
   private var score: Int = 0
   var life: Int = 5
   var nbeLilyPassed: Int = 0
-  var nbLily = 2
+  var nbLily = 0
   var distance: Int = 400
   val border : Int = 100
 
-  var firstLily = new Lily(new Vector2(300, 200),0)
-  var starter1 = new Lily(new Vector2(700, 500),1)
-  var starter2 = new Lily(new Vector2(1100, 200),2)
+  //setup the game
+  var firstLily = new Lily(new Vector2(300, random(border, ScreenSelector.SCREEN_HEIGHT-border)),nbLily)
+  var starter1 = new Lily(new Vector2(firstLily.posi.x+distance, random(border, ScreenSelector.SCREEN_HEIGHT-border)),nbLily+1)
+  var starter2 = new Lily(new Vector2(starter1.posi.x+distance, random(border, ScreenSelector.SCREEN_HEIGHT-border)),nbLily+2)
   var lilys: ArrayBuffer[Lily] = ArrayBuffer(firstLily, starter1, starter2)
   var frog: Frog = new Frog(new Vector2(lilys.head.pos)) //create it on the first lily
 
+  nbLily = 2
   def addLily(): Unit = {
     if(nbeLilyPassed >= 40){ //last level : random distance
       distance = random(border*2, ScreenSelector.SCREEN_WIDTH/2-border)
@@ -67,7 +69,7 @@ class Game {
         frog.onLily = false
         nbeLilyPassed += nblilyJumped
         score += 100*(nblilyJumped*1.4).round.toInt //add a bonus if more than 1 lily passed
-        for(i <- 0 until nblilyJumped){
+        for(_ <- 0 until nblilyJumped){
           addLily()
         }
         var jumpDistance : Float = lilys(nblilyJumped).posi.x-frog.pos.x

@@ -10,8 +10,7 @@ import java.io.{FileOutputStream, PrintWriter}
 
 
 class GameWindow extends RenderingScreen  {
-  var game : Game = _
-
+  private var game : Game = _
 
   override def onInit(): Unit = {
     game = new Game
@@ -23,7 +22,7 @@ class GameWindow extends RenderingScreen  {
     if(g.getShaderRenderer == null){
       g.setShader("data/shader/underwater.fp")
     }
-    g.getShaderRenderer().setUniform("mouse", ScreenSelector.mouse)
+    g.getShaderRenderer.setUniform("mouse", ScreenSelector.mouse)
 
     g.drawShader(ScreenSelector.time)
     ScreenSelector.time += Gdx.graphics.getDeltaTime

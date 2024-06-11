@@ -23,6 +23,7 @@ class Settings extends RenderingScreen {
     }
 
     g.drawString(bMenu.x + (80), bMenu.y + 80,"-Menu-", ScreenSelector.optimus80)
+    g.drawSchoolLogo()
   }
 
   override def dispose(): Unit = {
