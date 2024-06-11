@@ -10,16 +10,17 @@ class Frog(var posit : Vector2) extends AnimatedObject(posit) {
   var fileName : String = "data/images/frog_arrow.png"
   var fileName_jump : String = "data/images/jumping_frog.png"
   var fileName_dead : String = "data/images/dead_frog.png"
-  var scale : Float = 1f
+
 
   if (ScreenSelector.skin) {
-    fileName = "data/images/pam.png"
-    fileName_dead = "data/images/pingouin.png"
-    fileName_jump = "data/images/Jacquemet.png"
+    fileName = "data/images/pam_arrow.png"
+    fileName_dead = "data/images/dead_pingouin.png"
+    fileName_jump = "data/images/Jacquemet_jumping.png"
   }
   var img_jump = new BitmapImage(fileName_jump)
   var img_dead = new BitmapImage(fileName_dead)
-  override var img: BitmapImage = new BitmapImage(fileName)
+  override val img: BitmapImage = new BitmapImage(fileName)
+  var scale : Float = 1f
   var r : Int = 30
 
   override var direction : Int = 0 //degree
@@ -29,11 +30,7 @@ class Frog(var posit : Vector2) extends AnimatedObject(posit) {
   var passed : Boolean = true
 
   override def onGraphicsRender(g: GdxGraphics): Unit = {
-
-    if (direction >= 360) {
-      direction = 0
-    }
-
+    super.onGraphicsRender(g)
     if(!onLily){ //jump
       currentTime += Gdx.graphics.getDeltaTime
       var animationTime: Float = currentTime / ANIMATION_LENGTH

@@ -34,8 +34,8 @@ class GameWindow extends RenderingScreen  {
     if (game.frog.onLily) {
       game.frog.direction = game.lilys.head.direction
     }
-    g.drawString(g.getScreenWidth - 100, g.getScreenHeight - 100, "Score : " + game.getScore)
-    g.drawString(100, g.getScreenHeight - 100, game.getLife)
+    g.drawString(g.getScreenWidth - 250, g.getScreenHeight - 100, "Score : " + game.getScore, ScreenSelector.optimus40)
+    g.drawString(100, g.getScreenHeight - 100, game.getLife, ScreenSelector.optimus40)
     g.drawFPS()
   }
 

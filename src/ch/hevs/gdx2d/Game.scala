@@ -42,6 +42,7 @@ class Game {
   def onLily(pos: Vector2, angle: Float, lil: ArrayBuffer[Lily]): Int = {
     //distance center lily and the direction
     if(270f>angle && angle > 90f){ //can't jump backward
+      println("nope looser")
       return 0
     }
     var nbposLily : Int = lil.head.nbLily
@@ -65,29 +66,31 @@ class Game {
   def jump(): Unit = { //if the center of the lily is in the frog's colliderbox, add score, else life-1
     val nblilyJumped: Int = onLily(frog.pos, frog.direction, lilys)
     frog.state = new Vector2(frog.posit)
-      if (nblilyJumped != 0) {
-        frog.onLily = false
-        nbeLilyPassed += nblilyJumped
-        score += 100*(nblilyJumped*1.4).round.toInt //add a bonus if more than 1 lily passed
-        for(_ <- 0 until nblilyJumped){
-          addLily()
-        }
-        var jumpDistance : Float = lilys(nblilyJumped).posi.x-frog.pos.x
-        for (lil <- lilys) {
-          lil.destinationX = lil.posi.x - jumpDistance
-        }
-        frog.destination = lilys(nblilyJumped).posi.y
-        for (_ <- 0 until nblilyJumped) {
-          lilys = lilys.drop(1)
-        }
+    if (nblilyJumped != 0) {
+      frog.onLily = false
+      nbeLilyPassed += nblilyJumped
+      score += 100*(nblilyJumped*1.4).round.toInt //add a bonus if more than 1 lily passed
+      for(_ <- 0 until nblilyJumped){
+        addLily()
       }
-      else {
-        if (!(270f > frog.direction && frog.direction > 90f)) {
-          frog.onLily = false
-          frog.destination = (sin(frog.direction * math.Pi / 180)*2*distance).toFloat
-          life -= 1
-          frog.passed = false
-          frog.posit = new Vector2(lilys.head.posi)
+      var jumpDistance : Float = lilys(nblilyJumped).posi.x-frog.pos.x
+      for (lil <- lilys) {
+        lil.destinationX = lil.posi.x - jumpDistance
+      }
+      frog.destination = lilys(nblilyJumped).posi.y
+      for (_ <- 0 until nblilyJumped) {
+        lilys = lilys.drop(1)
+      }
+    }
+    else {
+      if (!(270f > frog.direction && frog.direction > 90f)) {
+        frog.onLily = false
+        frog.destination = (sin(frog.direction * math.Pi / 180)*2*distance).toFloat
+        life -= 1
+        frog.passed = false
+        frog.posit = new Vector2(lilys.head.posi)
+        for(i <- lilys){
+          i.destinationX = i.posi.x
         }
       }
     for (lil <- lilys) {
@@ -95,6 +98,7 @@ class Game {
       lil.mooving = true
     }
   }
+
   def getScore: String = {
     return score.toString
   }

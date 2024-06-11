@@ -11,9 +11,9 @@ class Lily(var posi: Vector2, var nbLily: Int, var rotationDirection : Boolean =
   var scale : Float = 2f
 
   if(ScreenSelector.skin){
-    fileName = "data/images/ISC_logo.png"
+    fileName = "data/images/ISC_lily.png"
   }
-  override var img: BitmapImage = new BitmapImage(fileName)
+  override val img: BitmapImage = new BitmapImage(fileName)
   var r : Int = 200
   var rotationSpeed : Double = 1 //for more spicy playing!
   override var direction : Int = 0
@@ -31,11 +31,7 @@ class Lily(var posi: Vector2, var nbLily: Int, var rotationDirection : Boolean =
   }*/
 
   override def onGraphicsRender(g: GdxGraphics): Unit = {
-
-    if (direction >= 360 || direction <= -360) {
-      direction = 0
-    }
-
+    super.onGraphicsRender(g)
     if(mooving){
       currentTime += Gdx.graphics.getDeltaTime
       var animationTime: Float = currentTime / ANIMATION_LENGTH
