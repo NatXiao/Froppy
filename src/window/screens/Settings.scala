@@ -5,18 +5,18 @@ import ch.hevs.gdx2d.lib.{GdxGraphics, ScreenManager}
 import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.math.{Rectangle, Vector2}
 import window.ScreenSelector
+import window.ScreenSelector.skin
 
 class Settings extends RenderingScreen {
   override def onInit(): Unit = {}
 
   private val bMenu : Rectangle = new Rectangle(1370f, 880f,400f,100f)
   private val bChangeSkin : Rectangle = new Rectangle(610f, 350f,700f,200f)
-  var click : Int = 0
 
   override def onGraphicRender(g: GdxGraphics): Unit = {
     g.clear(Color.DARK_GRAY)
     g.drawStringCentered(850,"Settings",ScreenSelector.FFF)
-    if (click % 2 != 0) {
+    if (skin) {
       g.drawString(bChangeSkin.x + 150, bChangeSkin.y + 130,"-HES Skin-", ScreenSelector.optimus80)
     }else{
       g.drawString(bChangeSkin.x + 150, bChangeSkin.y + 130,"-Classic Skin-", ScreenSelector.optimus80)
@@ -41,10 +41,7 @@ class Settings extends RenderingScreen {
       ScreenSelector.s.transitionTo(0, ScreenManager.TransactionType.SMOOTH)
     }
     if (bChangeSkin.contains(posClick)) {
-      click += 1
-      if(click % 2 != 0){
-        ScreenSelector.skin = !ScreenSelector.skin
-      }
+      skin = !skin
     }
   }
 }
