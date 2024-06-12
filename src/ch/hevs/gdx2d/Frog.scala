@@ -28,6 +28,8 @@ class Frog(var pos : Vector2) extends AnimatedObject(pos) {
   var onLily : Boolean = true //rotation on
   var passed : Boolean = true
 
+  var lily: Lily = null
+
   override def onGraphicsRender(g: GdxGraphics): Unit = {
     if(!onLily){ //jump
       currentTime += Gdx.graphics.getDeltaTime
