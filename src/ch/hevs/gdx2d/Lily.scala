@@ -14,6 +14,7 @@ abstract class Lily(var pos: Vector2, var nbLily: Int, var rotationDirection : B
   override val scale : Float = 2f
   var rotationSpeed : Double = 1 //for more spicy playing!
   val r : Int = 200
+  var frogIsOn : Boolean = _
 
   override def onGraphicsRender(g: GdxGraphics): Unit = {
     if (direction >= 360 || direction <= -360) {

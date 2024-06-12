@@ -22,8 +22,6 @@ class Game {
   var lilys: ArrayBuffer[Lily] = ArrayBuffer(firstLily, starter1, starter2)
   var frog: Frog = new Frog(lilys.head.pos) //create it on the first lily
 
-
-
   nbLily = 2
   def addLily(): Unit = {
     if(nbeLilyPassed >= 40){ //last level : random distance
@@ -85,6 +83,7 @@ class Game {
       for (_ <- 0 until nblilyJumped) {
         lilys = lilys.drop(1)
       }
+      lilys.head.frogIsOn = true
     }
     else {
       if (!(270f > frog.direction && frog.direction > 90f)) {

@@ -7,7 +7,7 @@ import window.ScreenSelector
 
 abstract class AnimatedObject(var position : Vector2) {
   val img : BitmapImage
-  var currentTime: Float = 0
+  var currentTime: Float = _
   var direction: Int
   val ANIMATION_LENGTH: Float = 0.6f
   var state : Vector2 = _
