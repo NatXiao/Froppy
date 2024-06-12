@@ -5,21 +5,17 @@ import ch.hevs.gdx2d.lib.GdxGraphics
 import com.badlogic.gdx.math.Vector2
 import window.ScreenSelector
 
-abstract class AnimatedObject(var pos : Vector2) {
+abstract class AnimatedObject(var position : Vector2) {
   val img : BitmapImage
   var currentTime: Float = 0
   var direction: Int
   val ANIMATION_LENGTH: Float = 0.6f
   var state : Vector2 = _
-  var scale : Float
+  val scale : Float
 
   def isAtDest(destination : Float, currentPosition : Float, state :Float ) : Boolean = {
     val sign = destination - state
     return currentPosition * sign >= destination * sign
   }
-  def onGraphicsRender(g: GdxGraphics): Unit = {
-    if (direction >= 360) {
-      direction = 0
-    }
-  }
+  def onGraphicsRender(g: GdxGraphics): Unit = {}
 }

@@ -6,31 +6,39 @@ import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.math.{Interpolation, Vector2}
 import window.ScreenSelector
 
-class SinkingLily(var positi : Vector2, nberLily : Int, rotation : Boolean = true) extends Lily(positi, nberLily, rotation) {
+class SinkingLily(var positi : Vector2, nberLily : Int, rotation : Boolean = true) extends Lily(positi, nberLily) {
   var sunk : Boolean = false
-  var fileName_sink: String = "data/images/sinkinglily.png"
+  var fileName: String = "data/images/sinkinglily.png"
   if (ScreenSelector.skin) {
     fileName = "data/images/ISC_logo_sinking.png"
   }
-  var imag : BitmapImage = new BitmapImage(fileName_sink)
-  //override var img = new BitmapImage(fileName_sink)
+  override val img = new BitmapImage(fileName)
   var alpha = 0.3f
-  var numbTurn : Int = 0
+  //var numbTurn : Int = _
 
   override def onGraphicsRender(g : GdxGraphics) = {
-    g.drawTransformedPicture(posi.x, posi.y, direction, 2, imag)
+    super.onGraphicsRender(g)
+    //println(frogIsOn)
+    //if(frogIsOn){
+      var numbTurn = 0
+      if (direction == 0) {
+        numbTurn += 1
+      }
+      if (numbTurn >= 2) {
+        sunk = true
+      }
+      println("direction : " + direction)
+      println("nbeturn : " + numbTurn)
+
     if(sunk){
       currentTime += Gdx.graphics.getDeltaTime
       var animationTimeDeath: Float = currentTime / ANIMATION_LENGTH
       var alpha = Interpolation.linear.apply(0.9f, 0, animationTimeDeath)
-      g.drawAlphaPicture(positi.x, positi.y,direction, 2, alpha, imag)
+      g.drawAlphaPicture(positi.x, positi.y,direction, scale, alpha, img)
       if (alpha <= 0) {
         numbTurn = 0
       }
     }
-    else{
-      super.onGraphicsRender(g)
-      g.drawTransformedPicture(posi.x, posi.y, direction, 2, imag)
-    }
+    //}
   }
 }

@@ -16,11 +16,13 @@ class Game {
   val border : Int = 100
 
   //setup the game
-  var firstLily = new Lily(new Vector2(300, random(border, ScreenSelector.SCREEN_HEIGHT-border)),nbLily)
-  var starter1 = new Lily(new Vector2(firstLily.posi.x+distance, random(border, ScreenSelector.SCREEN_HEIGHT-border)),nbLily+1)
-  var starter2 = new Lily(new Vector2(starter1.posi.x+distance, random(border, ScreenSelector.SCREEN_HEIGHT-border)),nbLily+2)
+  var firstLily = new StableLily(new Vector2(300, random(border, ScreenSelector.SCREEN_HEIGHT-border)),nbLily)
+  var starter1 = new StableLily(new Vector2(firstLily.posi.x+distance, random(border, ScreenSelector.SCREEN_HEIGHT-border)),nbLily+1)
+  var starter2 = new StableLily(new Vector2(starter1.posi.x+distance, random(border, ScreenSelector.SCREEN_HEIGHT-border)),nbLily+2)
   var lilys: ArrayBuffer[Lily] = ArrayBuffer(firstLily, starter1, starter2)
-  var frog: Frog = new Frog(new Vector2(lilys.head.pos)) //create it on the first lily
+  var frog: Frog = new Frog(lilys.head.pos) //create it on the first lily
+
+
 
   nbLily = 2
   def addLily(): Unit = {
@@ -33,16 +35,14 @@ class Game {
     var y: Int = random(border, ScreenSelector.SCREEN_HEIGHT-border)
     nbLily += 1
     if(randomBoolean(0.3f)){
-      lilys.append(new SinkingLily(new Vector2(lilys.last.pos.x + distance, y),nbLily, randomBoolean()))
+      lilys.append(new MoovingLily(new Vector2(lilys.last.pos.x + distance, y),nbLily, randomBoolean()))
     }else{
-      lilys.append(new Lily(new Vector2(lilys.last.pos.x + distance, y),nbLily, randomBoolean()))
+      lilys.append(new StableLily(new Vector2(lilys.last.pos.x + distance, y),nbLily, randomBoolean()))
     }
   }
 
-  def onLily(pos: Vector2, angle: Float, lil: ArrayBuffer[Lily]): Int = {
-    //distance center lily and the direction
+  def onLily(pos: Vector2, angle: Float, lil: ArrayBuffer[Lily]): Int = {//distance center lily and the direction
     if(270f>angle && angle > 90f){ //can't jump backward
-      println("nope looser")
       return 0
     }
     var nbposLily : Int = lil.head.nbLily
@@ -65,19 +65,23 @@ class Game {
 
   def jump(): Unit = { //if the center of the lily is in the frog's colliderbox, add score, else life-1
     val nblilyJumped: Int = onLily(frog.pos, frog.direction, lilys)
-    frog.state = new Vector2(frog.posit)
+    var jumpDistance: Float = lilys(nblilyJumped).pos.x - frog.pos.x
+    frog.state = new Vector2(frog.pos)
     if (nblilyJumped != 0) {
       frog.onLily = false
       nbeLilyPassed += nblilyJumped
-      score += 100*(nblilyJumped*1.4).round.toInt //add a bonus if more than 1 lily passed
-      for(_ <- 0 until nblilyJumped){
+      score += 100 * (nblilyJumped * 1.4).round.toInt //add a bonus if more than 1 lily passed
+      for (_ <- 0 until nblilyJumped) {
         addLily()
       }
-      var jumpDistance : Float = lilys(nblilyJumped).posi.x-frog.pos.x
+      var jumpDistance: Float = lilys(nblilyJumped).pos.x - frog.pos.x
+
+      frog.lily = lilys(nblilyJumped)
+
       for (lil <- lilys) {
-        lil.destinationX = lil.posi.x - jumpDistance
+        lil.destinationX = lil.pos.x - jumpDistance
       }
-      frog.destination = lilys(nblilyJumped).posi.y
+      frog.destination = lilys(nblilyJumped).pos.y
       for (_ <- 0 until nblilyJumped) {
         lilys = lilys.drop(1)
       }
@@ -85,16 +89,17 @@ class Game {
     else {
       if (!(270f > frog.direction && frog.direction > 90f)) {
         frog.onLily = false
-        frog.destination = (sin(frog.direction * math.Pi / 180)*2*distance).toFloat
+        frog.destination = (sin(frog.direction * math.Pi / 180) * 2 * jumpDistance).toFloat
         life -= 1
         frog.passed = false
-        frog.posit = new Vector2(lilys.head.posi)
-        for(i <- lilys){
-          i.destinationX = i.posi.x
+        frog.pos = new Vector2(lilys.head.pos)
+        for (lil <- lilys) {
+          lil.destinationX = lil.pos.x
         }
       }
+    }
     for (lil <- lilys) {
-      lil.state = new Vector2(lil.posi)
+      lil.state = new Vector2(lil.pos)
       lil.mooving = true
     }
   }
