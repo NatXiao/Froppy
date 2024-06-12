@@ -23,3 +23,8 @@ Our game is mainly in `src/window`, but our classes are in `src/ch/hevs/gdx2d` d
 
 Here is a small preview of our game : 
 ![img.png](data%2Fimages%2Fimg.png)
+
+
+https://github.com/NatXiao/Froppy/assets/89923918/7d37d167-29e4-458a-bef9-8b1a3d177df4
+
+
